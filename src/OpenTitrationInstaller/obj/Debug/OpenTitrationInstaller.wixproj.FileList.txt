@@ -1,0 +1,6 @@
+obj\Debug\Product.wixobj
+C:\Users\danie\source\repos\Titration Analyzer\OpenTitrationInstaller\bin\Debug\OpenTitrationInstaller.msi
+C:\Users\danie\source\repos\Titration Analyzer\OpenTitrationInstaller\bin\Debug\OpenTitrationInstaller.wixpdb
+obj\Debug\OpenTitrationInstaller.wixproj.BindContentsFileListnull.txt
+obj\Debug\OpenTitrationInstaller.wixproj.BindOutputsFileListnull.txt
+obj\Debug\OpenTitrationInstaller.wixproj.BindBuiltOutputsFileListnull.txt

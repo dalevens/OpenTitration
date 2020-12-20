@@ -1,0 +1,48 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Titration_Analyzer.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Iterationsetting" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">2</Value>
+    </Setting>
+    <Setting Name="linethickness" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">3</Value>
+    </Setting>
+    <Setting Name="interceptlabelstext" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Microsoft Sans Serif</Value>
+    </Setting>
+    <Setting Name="interceptlabelssiz" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">8</Value>
+    </Setting>
+    <Setting Name="xaxisgraphsize" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">14</Value>
+    </Setting>
+    <Setting Name="yaxisgraphsize" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">14</Value>
+    </Setting>
+    <Setting Name="xaxislabeltext" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Microsoft Sans Serif</Value>
+    </Setting>
+    <Setting Name="yaxislabeltext" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Microsoft Sans Serif</Value>
+    </Setting>
+    <Setting Name="margins" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">14</Value>
+    </Setting>
+    <Setting Name="spacing" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="headersize" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">12</Value>
+    </Setting>
+    <Setting Name="headerfont" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Microsoft Sans Serif</Value>
+    </Setting>
+    <Setting Name="resultsfont" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Microsoft Sans Serif</Value>
+    </Setting>
+    <Setting Name="resultssize" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">10</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
