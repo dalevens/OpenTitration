@@ -240,6 +240,15 @@ namespace Titration_Analyzer
 
         private void Import(object sender, EventArgs e)
         {
+            Equivalence.Items.Clear();
+            PKA.Items.Clear();
+            Concentration.Items.Clear();
+
+            Equivalence.Text = "";
+            PKA.Text = "";
+            Concentration.Text = "";
+            unkownacid.Text = "";
+
             var importdata = new adddata();
 
             addeddata = importdata;

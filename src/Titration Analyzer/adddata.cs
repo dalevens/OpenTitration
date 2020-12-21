@@ -22,6 +22,7 @@ namespace Titration_Analyzer
             private List<double> tempaveragevolume = new List<double>();
             public List<double> equivalencepoints = new List<double>();
             public List<double> equivalencepointPH = new List<double>();
+            public List<double> pKavolumes = new List<double>();
             public List<double> PKavalues = new List<double>();
             
 
@@ -165,8 +166,7 @@ namespace Titration_Analyzer
 
                     equivalencepoints.Add(GetEquivalence());
                     equivalencepointPH.Add(LinearInterpolatePHeq(equivalencepoints[i]));
-                    PKavalues.Add(GetPKA(equivalencepoints[i]));
-                    titrationdatastorage.unkown += Convert.ToString(PKavalues[i]) + ",";
+                    
 
                     var iterationsetting = titrationdatastorage.iterationsetting;
                     var itbegin = iterationsetting * (-1);
@@ -192,15 +192,37 @@ namespace Titration_Analyzer
 
                 }
 
+                equivalencepoints.Sort();
+
+                pKavolumes.Add(equivalencepoints[0]/2);
+
+                switch (passes)
+                {
+                    case 2:
+                        pKavolumes.Add(equivalencepoints[0] + ((equivalencepoints[1] - equivalencepoints[0])/2));
+                        break;
+                    case 3:
+                        pKavolumes.Add(equivalencepoints[0] + ((equivalencepoints[1] - equivalencepoints[0]) / 2));
+                        pKavolumes.Add(equivalencepoints[1] + ((equivalencepoints[2] - equivalencepoints[1]) / 2));
+                        break;
+                }
+
+               
+                for (int y = 0; y < passes; y++)
+                {
+                    PKavalues.Add(GetPKA(pKavolumes[y]));
+                    titrationdatastorage.unkown += Convert.ToString(PKavalues[y]) + ",";
+                }
+         
+
+
                 if (titrationdatastorage.isbase == false)
                 {
-                    equivalencepoints.Sort();
                     equivalencepointPH.Sort();
                     PKavalues.Sort();
                 }
                 else if (titrationdatastorage.isbase == true)
                 {
-                    equivalencepoints.Sort();
                     equivalencepointPH.Sort();
                     equivalencepointPH.Reverse();
                     PKavalues.Sort();
@@ -272,8 +294,17 @@ namespace Titration_Analyzer
 
                 for(int i = 0; i < titrationdatastorage.hplus; i++)
                 {
-                    importantpoints.Points.AddXY(equivalencepoints[i] / 2, PKavalues[i]);
-                    importantpoints.Points[i + pointcount].Label = "pKa " + (i + 1);
+                    importantpoints.Points.AddXY(pKavolumes[i], PKavalues[i]);
+
+                    if (titrationdatastorage.isbase == false)
+                    {
+                        importantpoints.Points[i + pointcount].Label = "pKa " + (i + 1);
+                    }
+                    else if(titrationdatastorage.isbase == true)
+                    {
+                        importantpoints.Points[i + pointcount].Label = "pKb " + (i + 1);
+                    }
+                    
                     importantpoints.Points[i + pointcount].LabelForeColor = Color.Blue;
                     importantpoints.Points[i + pointcount].Color = Color.BlueViolet;
                 }
@@ -400,7 +431,7 @@ namespace Titration_Analyzer
 
             public double GetPKA(double equivalence)
             {
-                var pkavolume = (equivalence/2);
+                var pkavolume = (equivalence);
                 var PHnumberposition = titrationdatastorage.titrationstorage.Count;
                 var upperbound = "";
                 var lowerbound = "";
