@@ -1,0 +1,6 @@
+C:\Users\danie\source\repos\Titration Analyzer\Titration Analyzer\bin\Release\OpenTitration.exe
+C:\Users\danie\source\repos\Titration Analyzer\Titration Analyzer\bin\Release\OpenTitration.exe.config
+C:\Users\danie\source\repos\Titration Analyzer\Titration Analyzer\bin\Release\OpenTitration.pdb
+C:\Users\danie\source\repos\Titration Analyzer\Titration Analyzer\bin\Release\OpenTitration V1 User Manual.pdf
+C:\Users\danie\source\repos\Titration Analyzer\Titration Analyzer\bin\Release\PdfSharp.Charting.dll
+C:\Users\danie\source\repos\Titration Analyzer\Titration Analyzer\bin\Release\PdfSharp.dll
