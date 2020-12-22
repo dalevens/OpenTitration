@@ -9,4 +9,6 @@ Update Nov 24, 2020: Errors corrected pertaining to the series select tool bar.
 
 Update Dec 20, 2020: Errors corrected with regards to the calculation of pKa values for diprotic and triprotic unkown acids and bases. Data is now cleared upon opening of new graphical data in the application. pKb has been updated in the base labels when an unkown base is being analyzed.
 
+Update Dec 22, 2020: Corrected error regarding incorrectly computed concentration. Concentration was hooked up accidentally to the equivalence pH value rather then the volume.
+
 New collaborator (Tim Bernhard) -> Working to simplify code for easier work flow and management.
