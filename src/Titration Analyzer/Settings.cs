@@ -11,21 +11,21 @@ namespace Titration_Analyzer
 
         public Settings(Form1 opentitration)
         {
-            
+
             titrationanal = opentitration;
 
             InitializeComponent();
 
             InterceptFont.Items.Add(Form1.titrationdatastorage.interceptlabelstext);
-            
+
             xaxisfont.Items.Add(Form1.titrationdatastorage.xaxislabeltext);
-           
+
             yaxisfont.Items.Add(Form1.titrationdatastorage.yaxislabeltext);
-            
+
             HeadingsText.Items.Add(Form1.titrationdatastorage.headerfont);
-           
+
             ResultsText.Items.Add(Form1.titrationdatastorage.resultsfont);
-            
+
 
             Sensitivty.Text = Convert.ToString(Form1.titrationdatastorage.iterationsetting);
             LineThickness.Text = Convert.ToString(Form1.titrationdatastorage.linethickness);
@@ -42,8 +42,8 @@ namespace Titration_Analyzer
             margins.Text = Convert.ToString(Form1.titrationdatastorage.margins);
             Spacingpdf.Text = Convert.ToString(Form1.titrationdatastorage.spacing);
             linewidth = linedemonstrator.Width;
-            lineheight = linedemonstrator.Height/2;
-            
+            lineheight = linedemonstrator.Height / 2;
+
         }
 
         Graphics g = null;
@@ -67,7 +67,7 @@ namespace Titration_Analyzer
 
             installedfonts = installedfontcollection.Families;
 
-            foreach(var font in installedfonts)
+            foreach (var font in installedfonts)
             {
                 selectedcombobox.Items.Add(font.Name);
             }

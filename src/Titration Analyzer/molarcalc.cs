@@ -132,7 +132,7 @@ namespace Titration_Analyzer
 
             var formulasplit = splitelements.SplitCapitalLetters(atoms);
 
-            foreach(var element in formulasplit)
+            foreach (var element in formulasplit)
             {
                 bool multipliercheck = element.Any(char.IsDigit);
 
@@ -161,11 +161,11 @@ namespace Titration_Analyzer
                     {
                         MessageBox.Show($"No match for the element '{element}' was found", "Error: Failed to Match Formula", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-                } 
+                }
             }
-            
+
             return molarsum;
         }
-           
+
     }
 }
