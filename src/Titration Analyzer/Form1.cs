@@ -80,6 +80,7 @@ namespace Titration_Analyzer
             titrationdatastorage.resultsfont = Properties.Settings.Default.resultsfont;
             titrationdatastorage.resultssize = Properties.Settings.Default.resultssize;
 
+            // Graph data
             titrationdatastorage.grapheddata = false;
             titrationdatastorage.graphderiv = false;
     }
@@ -540,6 +541,12 @@ namespace Titration_Analyzer
                 
             }
         }
+
+        private void Simulate(object sender, EventArgs e)
+        {
+            // Plot the simulation data
+        }
+
 
         private void secondselect(object sender, EventArgs e)
         {
