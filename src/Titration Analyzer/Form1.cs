@@ -1,11 +1,11 @@
-﻿using System;
+﻿using PdfSharp.Drawing;
+using PdfSharp.Pdf;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using System.Diagnostics;
-using PdfSharp.Drawing;
-using PdfSharp.Pdf;
 
 namespace Titration_Analyzer
 {
@@ -21,8 +21,8 @@ namespace Titration_Analyzer
             public static int hplus;
             public static string unkown;
             public static bool isbase;
-            
-            
+
+
             //Graph Settings
             public static int iterationsetting;
             public static int linethickness;
@@ -45,14 +45,14 @@ namespace Titration_Analyzer
             public static bool grapheddata;
             public static bool graphderiv;
         }
-        
+
         public static string acidbase;
         public static string pkapkb;
-        
+
         public Form1()
         {
             InitializeComponent();
-            
+
             NormY1.Text = "6";
             NormY2.Text = "4";
             OffsetY2.Text = "2";
@@ -71,7 +71,7 @@ namespace Titration_Analyzer
             titrationdatastorage.xaxislabeltext = Properties.Settings.Default.xaxislabeltext;
             titrationdatastorage.yaxislabeltext = Properties.Settings.Default.yaxislabeltext;
             titrationdatastorage.iterationsetting = Properties.Settings.Default.Iterationsetting;
-            
+
             //PDF settings
             titrationdatastorage.margins = Properties.Settings.Default.margins;
             titrationdatastorage.spacing = Properties.Settings.Default.spacing;
@@ -83,24 +83,24 @@ namespace Titration_Analyzer
             // Graph data
             titrationdatastorage.grapheddata = false;
             titrationdatastorage.graphderiv = false;
-    }
+        }
         public adddata addeddata;
         public void ChangeGraph()
         {
             chart1.ChartAreas[0].AxisY.TitleFont = new System.Drawing.Font(titrationdatastorage.yaxislabeltext, titrationdatastorage.yaxisgraphsize, System.Drawing.FontStyle.Bold);
             chart1.ChartAreas[0].AxisX.TitleFont = new System.Drawing.Font(titrationdatastorage.xaxislabeltext, titrationdatastorage.xaxisgraphsize, System.Drawing.FontStyle.Bold);
-            
+
         }
 
         public void ChangeSeries()
         {
-            if(titrationdatastorage.grapheddata == true)
+            if (titrationdatastorage.grapheddata == true)
             {
                 addeddata.PhDat.BorderWidth = titrationdatastorage.linethickness;
             }
-            
-                
-            if(titrationdatastorage.graphderiv == true)
+
+
+            if (titrationdatastorage.graphderiv == true)
             {
                 addeddata.PhDeriv.BorderWidth = titrationdatastorage.linethickness;
 
@@ -108,7 +108,7 @@ namespace Titration_Analyzer
 
                 addeddata.importantpoints.Font = new System.Drawing.Font(titrationdatastorage.interceptlabelstext, titrationdatastorage.interceptlabelssize, System.Drawing.FontStyle.Bold);
             }
-                
+
 
 
         }
@@ -117,7 +117,7 @@ namespace Titration_Analyzer
         {
 
         }
-        
+
         private void analyze_click(object sender, EventArgs e)
         {
             var molestring = formula.Text;
@@ -133,23 +133,23 @@ namespace Titration_Analyzer
                 Molarmass.Text = Convert.ToString(molarformula.FindMolarMass(molestring));
             }
 
-            if(MolarRatio.Text == "")
+            if (MolarRatio.Text == "")
             {
                 MolarRatio.Text = "1:1";
             }
 
-            if(dilutionfactor.Text == "")
+            if (dilutionfactor.Text == "")
             {
                 dilutionfactor.Text = "1";
             }
-            
+
             var importdata = new adddata();
-            
+
             addeddata = importdata;
 
             chart1.Series.Clear();
 
-            if(titrationdatastorage.titrationstorage == null)
+            if (titrationdatastorage.titrationstorage == null)
             {
                 MessageBox.Show("No titration data has been imported");
             }
@@ -180,7 +180,7 @@ namespace Titration_Analyzer
                 MessageBox.Show("No data exists to be analyzed", "Error: Failure to Compute Derivative", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            
+
             chart1.Series.Add(importdata.Secondderivative());
             Equivalence.Items.Clear();
             PKA.Items.Clear();
@@ -190,10 +190,10 @@ namespace Titration_Analyzer
 
             ChangeSeries();
 
-            for(int i = 0; i < titrationdatastorage.hplus; i++)
+            for (int i = 0; i < titrationdatastorage.hplus; i++)
             {
-                Equivalence.Items.Add(Convert.ToString(i+1) + "# " + Convert.ToString(Math.Round(importdata.equivalencepoints[i], 4)) + "mL, " + Convert.ToString(Math.Round(importdata.equivalencepointPH[i], 4)));
-                PKA.Items.Add(Convert.ToString(i+1) + "# " + Convert.ToString(importdata.PKavalues[i]));
+                Equivalence.Items.Add(Convert.ToString(i + 1) + "# " + Convert.ToString(Math.Round(importdata.equivalencepoints[i], 4)) + "mL, " + Convert.ToString(Math.Round(importdata.equivalencepointPH[i], 4)));
+                PKA.Items.Add(Convert.ToString(i + 1) + "# " + Convert.ToString(importdata.PKavalues[i]));
             }
 
             Equivalence.Text = Convert.ToString(Math.Round(importdata.equivalencepoints[0], 4)) + "mL," + Convert.ToString(Math.Round(importdata.equivalencepointPH[0], 4));
@@ -233,7 +233,7 @@ namespace Titration_Analyzer
             Concentration.Text = Convert.ToString(concentrationdetermin.ReturnConcentration(Equivalence.Text, TitConc.Text, MolarRatio.Text, volumeanal.Text, dilutionfactor.Text));
 
             importdata.DataStore();
-            
+
             Derivcheck.Checked = true;
             Interceptpoints.Checked = true;
             derivative2.Checked = true;
@@ -256,9 +256,9 @@ namespace Titration_Analyzer
 
             importdata.importandstore();
 
-            
 
-            if(importdata.finishprocessing == true)
+
+            if (importdata.finishprocessing == true)
             {
                 goto Finish;
             }
@@ -277,7 +277,7 @@ namespace Titration_Analyzer
 
             ChangeGraph();
 
-            if(importdata.finishprocessing == true)
+            if (importdata.finishprocessing == true)
             {
                 goto Finish;
             }
@@ -285,19 +285,19 @@ namespace Titration_Analyzer
             {
                 chart1.Series.Add(importdata.Graphdata());
             }
-                
+
 
             chart1.ChartAreas[0].RecalculateAxesScale();
 
             Titrationcheck.Checked = true;
 
         Finish:
-            if(importdata.finishprocessing == true)
+            if (importdata.finishprocessing == true)
             {
                 titrationdatastorage.titrationstorage.Clear();
                 MessageBox.Show("Unable to graph data");
             }
-            
+
         }
 
         private void checkBox3_CheckedChanged(object sender, EventArgs e)
@@ -317,7 +317,7 @@ namespace Titration_Analyzer
             {
 
             }
-            
+
         }
 
         private void Derivcheck_CheckedChanged(object sender, EventArgs e)
@@ -402,7 +402,7 @@ namespace Titration_Analyzer
                 sw.WriteLine("Unkown " + acidbase + " " + pkapkb + ": " + pka.ToString() + "\n");
             }
 
-            sw.WriteLine("Unkown " + acidbase +": " + unkownacid.Text + "\n");
+            sw.WriteLine("Unkown " + acidbase + ": " + unkownacid.Text + "\n");
             sw.WriteLine("Volume(mL),PH,Y',Y''");
 
             foreach (string data in titrationdatastorage.completedataset)
@@ -422,8 +422,8 @@ namespace Titration_Analyzer
             var indent = titrationdatastorage.margins;
 
             gfx.DrawString("------//Titrant//------", fontcaption, XBrushes.Black, new XRect(indent, spacing, page.Width, page.Height), XStringFormats.TopLeft);
-            gfx.DrawString("Molecule: " + formula.Text, font, XBrushes.Black, new XRect(indent, spacing*2, page.Width, page.Height), XStringFormats.TopLeft);
-            gfx.DrawString("Molar Mass: " + Molarmass.Text + "m/z", font, XBrushes.Black, new XRect(indent, spacing*3, page.Width, page.Height), XStringFormats.TopLeft);
+            gfx.DrawString("Molecule: " + formula.Text, font, XBrushes.Black, new XRect(indent, spacing * 2, page.Width, page.Height), XStringFormats.TopLeft);
+            gfx.DrawString("Molar Mass: " + Molarmass.Text + "m/z", font, XBrushes.Black, new XRect(indent, spacing * 3, page.Width, page.Height), XStringFormats.TopLeft);
             gfx.DrawString("Mass: " + mass.Text + "g", font, XBrushes.Black, new XRect(indent, spacing * 4, page.Width, page.Height), XStringFormats.TopLeft);
             gfx.DrawString("Volume: " + Volumetit.Text + "mL", font, XBrushes.Black, new XRect(indent, spacing * 5, page.Width, page.Height), XStringFormats.TopLeft);
             gfx.DrawString("Concentration: " + TitConc.Text + "mol/L", font, XBrushes.Black, new XRect(indent, spacing * 6, page.Width, page.Height), XStringFormats.TopLeft);
@@ -432,7 +432,7 @@ namespace Titration_Analyzer
             gfx.DrawString("Volume: " + volumeanal.Text + "mL", font, XBrushes.Black, new XRect(indent, spacing * 9, page.Width, page.Height), XStringFormats.TopLeft);
             gfx.DrawString("Dilution Factor: " + dilutionfactor.Text + "x", font, XBrushes.Black, new XRect(indent, spacing * 10, page.Width, page.Height), XStringFormats.TopLeft);
             gfx.DrawString("------//Results//------", fontcaption, XBrushes.Black, new XRect(indent, spacing * 11, page.Width, page.Height), XStringFormats.TopLeft);
-            
+
             switch (titrationdatastorage.hplus)
             {
                 case 1:
@@ -464,11 +464,11 @@ namespace Titration_Analyzer
 
             foreach (var pka in PKA.Items)
             {
-                gfx.DrawString("Unkown " + acidbase + " " +  pkapkb + ": " + pka.ToString(), font, XBrushes.Black, new XRect(indent, spacing * pagesize, page.Width, page.Height), XStringFormats.TopLeft);
+                gfx.DrawString("Unkown " + acidbase + " " + pkapkb + ": " + pka.ToString(), font, XBrushes.Black, new XRect(indent, spacing * pagesize, page.Width, page.Height), XStringFormats.TopLeft);
                 pagesize++;
             }
 
-            gfx.DrawString("Unkown " + acidbase + ": " + unkownacid.Text, font, XBrushes.Black, new XRect(indent, spacing*(pagesize + 1), page.Width, page.Height), XStringFormats.TopLeft);
+            gfx.DrawString("Unkown " + acidbase + ": " + unkownacid.Text, font, XBrushes.Black, new XRect(indent, spacing * (pagesize + 1), page.Width, page.Height), XStringFormats.TopLeft);
 
             chart1.SaveImage(directory + "\\tempchart.png", System.Windows.Forms.DataVisualization.Charting.ChartImageFormat.Png);
 
@@ -476,7 +476,7 @@ namespace Titration_Analyzer
 
             var aspectratio = graph.PointWidth / page.Width;
 
-            gfx.DrawImage(graph, 0, spacing * (pagesize + 5), graph.PointWidth/aspectratio, graph.PointHeight/aspectratio);
+            gfx.DrawImage(graph, 0, spacing * (pagesize + 5), graph.PointWidth / aspectratio, graph.PointHeight / aspectratio);
 
             gfx.DrawString("Volume (mL) vs. PH", GraphCaption, XBrushes.Black, new XRect(0, spacing * (pagesize + 4), page.Width, page.Height), XStringFormats.TopCenter);
 
@@ -484,7 +484,7 @@ namespace Titration_Analyzer
 
             File.Delete(directory + "\\tempchart.png");
 
-            
+
 
             PdfPage page2 = documentobject.AddPage();
             XGraphics gfx2 = XGraphics.FromPdfPage(page2);
@@ -494,7 +494,7 @@ namespace Titration_Analyzer
             var pagesize2 = 2;
             foreach (string data in titrationdatastorage.completedataset)
             {
-                gfx2.DrawString(data, font, XBrushes.Black, new XRect(indent, spacing*pagesize2, page.Width, page.Height), XStringFormats.TopLeft);
+                gfx2.DrawString(data, font, XBrushes.Black, new XRect(indent, spacing * pagesize2, page.Width, page.Height), XStringFormats.TopLeft);
                 pagesize2++;
             }
 
@@ -507,44 +507,112 @@ namespace Titration_Analyzer
         private void Export(object sender, EventArgs e)
         {
             SaveFileDialog exportdata = new SaveFileDialog();
-            
+
             exportdata.Filter = "Text File|*.txt|PDF files (*.pdf)|*.pdf|Save Graph (*.png)|*.png";
             exportdata.Title = "Export Titration Data";
 
 
-            if(exportdata.ShowDialog() == DialogResult.OK)
+            if (exportdata.ShowDialog() == DialogResult.OK)
             {
                 var filename = exportdata.FileName;
                 var fileextension = Path.GetExtension(filename);
                 var fullfilepath = Path.GetFullPath(filename);
                 var filepath = Path.GetDirectoryName(filename);
-                
-                
+
+
                 exportdata.CheckFileExists = true;
 
-                if(fileextension == ".txt")
+                if (fileextension == ".txt")
                 {
                     using (StreamWriter sw = new StreamWriter(exportdata.FileName))
                     {
                         Textexport(sw);
                     }
                 }
-                else if(fileextension == ".pdf")
+                else if (fileextension == ".pdf")
                 {
                     PdfDocument titrationdatasheet = new PdfDocument();
                     PDFexporter(titrationdatasheet, fullfilepath, filepath);
                 }
-                else if(fileextension == ".png")
+                else if (fileextension == ".png")
                 {
                     chart1.SaveImage(Path.GetFullPath(filename), System.Windows.Forms.DataVisualization.Charting.ChartImageFormat.Png);
                 }
-                
+
             }
         }
 
         private void Simulate(object sender, EventArgs e)
         {
-            // Plot the simulation data
+            // Preset variables. Remove these later when we know what goes where from the main set of variables
+            bool a_acidic = true;
+            bool t_acidic = !a_acidic;
+            string a_pK = "5.2,8.9";
+            string t_pK = "-1";
+            bool a_strong = false;
+            bool t_strong = true;
+
+            double a_vol = 20;
+            double a_conc = 0.1;
+            double t_conc = 0.1;
+
+
+            ProcessStartInfo start = new ProcessStartInfo();
+
+
+            // Create Process Info
+            start.FileName = Directory.GetFiles(@"python_env\Scripts\", "python.exe", SearchOption.AllDirectories).ToString();
+            //start.FileName = @"\python_env\Scripts\python.exe";
+
+
+            // 2) Provide script and arguments
+            var script = @"F:\Coding_Projects\Python\OpenTitration\OpenTitration\src\TitrationAnalyzer\script.py";
+            start.Arguments = string.Format("{0} {1} {2} {3} {4} {5} {6} {7} {8} {9}", script, a_acidic, t_acidic, a_pK, t_pK, a_strong, t_strong, a_vol, a_conc, t_conc);
+
+            // 3) Process configuration
+            start.UseShellExecute = false;
+            start.RedirectStandardOutput = true;
+            start.RedirectStandardError = true;
+
+            // 4) Execute process and get output
+            using (Process process = Process.Start(start))
+            {
+                // Get the data from the printed output of the script.py
+                var results = process.StandardOutput.ReadToEnd();
+
+                // Split the printed statements by the newline separating them. Also remove all square brackets and spaces
+                string[] split_results = results.Split(new[] { '\n' }, StringSplitOptions.None);
+                var data_list = new List<string> { };
+                foreach (string item in split_results)
+                {
+                    data_list.Add(item.Trim(new Char[] { ']', '[', ' ', '\r' }).Trim());
+                }
+
+                // Remove the third item in the list, which is just an null value
+                data_list.RemoveAt(2);
+
+                // Turn the block strings into lists of strings
+                string[] simPhStr = data_list[0].Split(new[] { ',' }, StringSplitOptions.None);
+                string[] simVolStr = data_list[1].Split(new[] { ',' }, StringSplitOptions.None);
+
+                var simPhLs = new List<double> { };
+                var simVolLs = new List<double> { };
+
+                // Convert the substrings in each list to doubles
+                foreach (string item in simPhStr)
+                {
+                    simPhLs.Add(double.Parse(item.Trim()));
+                }
+
+                foreach (string item in simVolStr)
+                {
+                    simVolLs.Add(double.Parse(item.Trim()));
+                }
+                MessageBox.Show(simVolLs[0].ToString());
+                // simVolLs and simPhLs are the Volumes an pH values for the simulated titration
+                // They are trimmed to be representative of the whole titration, not the range the user set.
+                }
+
         }
 
 
@@ -574,7 +642,7 @@ namespace Titration_Analyzer
             Volumetit.Text = "";
             TitConc.Text = "";
 
-            if(Concknown.Checked == true)
+            if (Concknown.Checked == true)
             {
                 mass.BackColor = Color.Beige;
                 Volumetit.BackColor = Color.Beige;
@@ -588,7 +656,7 @@ namespace Titration_Analyzer
                 mass.ReadOnly = false;
                 Volumetit.ReadOnly = false;
             }
-           
+
         }
         private void baseselect(object sender, EventArgs e)
         {
@@ -656,8 +724,8 @@ namespace Titration_Analyzer
                     findhelpfile.InitialDirectory = @"C:\";
                     findhelpfile.Filter = "PDF files (*.pdf)|*.pdf";
                     findhelpfile.RestoreDirectory = true;
-                    
-                   
+
+
                     if (findhelpfile.ShowDialog() == DialogResult.OK)
                     {
                         var filename = findhelpfile.FileName;
@@ -666,7 +734,7 @@ namespace Titration_Analyzer
                     }
                     else
                     {
-                        
+
                     }
 
 
