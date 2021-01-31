@@ -561,12 +561,16 @@ namespace Titration_Analyzer
 
 
             // Create Process Info
-            start.FileName = Directory.GetFiles(@"python_env\Scripts\", "python.exe", SearchOption.AllDirectories).ToString();
-            //start.FileName = @"\python_env\Scripts\python.exe";
+                // The filename needs to be the directory of python.exe
+                // Can be found in python_env\Scripts\python.exe
+                // Needs the full directory, not just the filename
+            start.FileName = @"\python_env\Scripts\python.exe";
 
 
             // 2) Provide script and arguments
-            var script = @"F:\Coding_Projects\Python\OpenTitration\OpenTitration\src\TitrationAnalyzer\script.py";
+                // var script should be the directory for script.py
+                // Needs the full directory, not just the filename
+            var script = @"script.py";
             start.Arguments = string.Format("{0} {1} {2} {3} {4} {5} {6} {7} {8} {9}", script, a_acidic, t_acidic, a_pK, t_pK, a_strong, t_strong, a_vol, a_conc, t_conc);
 
             // 3) Process configuration
