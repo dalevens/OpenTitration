@@ -34,6 +34,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.Analyzebutton = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.simbutton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.formula = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -97,22 +98,33 @@
             this.Analyzebutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Analyzebutton.Location = new System.Drawing.Point(992, 473);
             this.Analyzebutton.Name = "Analyzebutton";
-            this.Analyzebutton.Size = new System.Drawing.Size(184, 50);
+            this.Analyzebutton.Size = new System.Drawing.Size(184, 33);
             this.Analyzebutton.TabIndex = 0;
             this.Analyzebutton.Text = "Analyze";
             this.Analyzebutton.UseVisualStyleBackColor = true;
             this.Analyzebutton.Click += new System.EventHandler(this.analyze_click);
             // 
-            // button2
+            // button2 Export Button
             // 
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(992, 529);
+            this.button2.Location = new System.Drawing.Point(992, 506);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(184, 50);
+            this.button2.Size = new System.Drawing.Size(184, 34);
             this.button2.TabIndex = 1;
             this.button2.Text = "Export";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.Export);
+            //
+            // simbutton Simulate Button
+            //
+            this.simbutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.simbutton.Location = new System.Drawing.Point(992, 540);
+            this.simbutton.Name = "simbutton";
+            this.simbutton.Size = new System.Drawing.Size(184, 33);
+            this.simbutton.TabIndex = 1;
+            this.simbutton.Text = "Simulate";
+            this.simbutton.UseVisualStyleBackColor = true;
+            this.simbutton.Click += new System.EventHandler(this.Simulate);
             // 
             // label1
             // 
@@ -735,6 +747,7 @@
             this.Controls.Add(this.Interceptpoints);
             this.Controls.Add(this.Derivcheck);
             this.Controls.Add(this.button2);
+            this.Controls.Add(this.simbutton);
             this.Controls.Add(this.Analyzebutton);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox4);
@@ -763,6 +776,7 @@
 
         private System.Windows.Forms.Button Analyzebutton;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button simbutton;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox formula;
         private System.Windows.Forms.Label label2;
