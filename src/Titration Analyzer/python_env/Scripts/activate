@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\Users\Poe\source\repos\OpenTitration\python_env"
+VIRTUAL_ENV="C:\Users\Jackson\source\repos\OpenTitration\src\Titration Analyzer\python_env"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
