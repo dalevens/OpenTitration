@@ -190,5 +190,125 @@ namespace Titration_Analyzer.Properties {
                 this["resultssize"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ManualSensitivity {
+            get {
+                return ((bool)(this["ManualSensitivity"]));
+            }
+            set {
+                this["ManualSensitivity"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Automatic")]
+        public string SolveMethod {
+            get {
+                return ((string)(this["SolveMethod"]));
+            }
+            set {
+                this["SolveMethod"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Volume")]
+        public string RangeType {
+            get {
+                return ((string)(this["RangeType"]));
+            }
+            set {
+                this["RangeType"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double Range1 {
+            get {
+                return ((double)(this["Range1"]));
+            }
+            set {
+                this["Range1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double Range2 {
+            get {
+                return ((double)(this["Range2"]));
+            }
+            set {
+                this["Range2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int HPlus {
+            get {
+                return ((int)(this["HPlus"]));
+            }
+            set {
+                this["HPlus"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool StrongAcidorBase {
+            get {
+                return ((bool)(this["StrongAcidorBase"]));
+            }
+            set {
+                this["StrongAcidorBase"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\"\"")]
+        public string PythonPath {
+            get {
+                return ((string)(this["PythonPath"]));
+            }
+            set {
+                this["PythonPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.1")]
+        public double Resolution {
+            get {
+                return ((double)(this["Resolution"]));
+            }
+            set {
+                this["Resolution"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool CustomPythonPath {
+            get {
+                return ((bool)(this["CustomPythonPath"]));
+            }
+            set {
+                this["CustomPythonPath"] = value;
+            }
+        }
     }
 }

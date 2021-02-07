@@ -34,7 +34,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.Analyzebutton = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.simbutton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.formula = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -86,6 +85,8 @@
             this.Hplus = new System.Windows.Forms.Label();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
+            this.Simulate = new System.Windows.Forms.Button();
+            this.SimulatedSeries = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.titrationdatBindingSource)).BeginInit();
@@ -96,7 +97,7 @@
             // Analyzebutton
             // 
             this.Analyzebutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Analyzebutton.Location = new System.Drawing.Point(992, 473);
+            this.Analyzebutton.Location = new System.Drawing.Point(992, 466);
             this.Analyzebutton.Name = "Analyzebutton";
             this.Analyzebutton.Size = new System.Drawing.Size(184, 33);
             this.Analyzebutton.TabIndex = 0;
@@ -104,27 +105,16 @@
             this.Analyzebutton.UseVisualStyleBackColor = true;
             this.Analyzebutton.Click += new System.EventHandler(this.analyze_click);
             // 
-            // button2 Export Button
+            // button2
             // 
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(992, 506);
+            this.button2.Location = new System.Drawing.Point(992, 544);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(184, 34);
+            this.button2.Size = new System.Drawing.Size(184, 33);
             this.button2.TabIndex = 1;
             this.button2.Text = "Export";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.Export);
-            //
-            // simbutton Simulate Button
-            //
-            this.simbutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.simbutton.Location = new System.Drawing.Point(992, 540);
-            this.simbutton.Name = "simbutton";
-            this.simbutton.Size = new System.Drawing.Size(184, 33);
-            this.simbutton.TabIndex = 1;
-            this.simbutton.Text = "Simulate";
-            this.simbutton.UseVisualStyleBackColor = true;
-            this.simbutton.Click += new System.EventHandler(this.Simulate);
             // 
             // label1
             // 
@@ -143,7 +133,7 @@
             this.formula.Name = "formula";
             this.formula.Size = new System.Drawing.Size(108, 35);
             this.formula.TabIndex = 4;
-            this.formula.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.formula.TextChanged += new System.EventHandler(this.Formula_TextChanged);
             // 
             // label2
             // 
@@ -169,7 +159,7 @@
             this.Derivcheck.Checked = true;
             this.Derivcheck.CheckState = System.Windows.Forms.CheckState.Checked;
             this.Derivcheck.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Derivcheck.Location = new System.Drawing.Point(467, 29);
+            this.Derivcheck.Location = new System.Drawing.Point(478, 13);
             this.Derivcheck.Name = "Derivcheck";
             this.Derivcheck.Size = new System.Drawing.Size(169, 29);
             this.Derivcheck.TabIndex = 7;
@@ -183,7 +173,7 @@
             this.Interceptpoints.Checked = true;
             this.Interceptpoints.CheckState = System.Windows.Forms.CheckState.Checked;
             this.Interceptpoints.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Interceptpoints.Location = new System.Drawing.Point(848, 29);
+            this.Interceptpoints.Location = new System.Drawing.Point(686, 24);
             this.Interceptpoints.Name = "Interceptpoints";
             this.Interceptpoints.Size = new System.Drawing.Size(133, 29);
             this.Interceptpoints.TabIndex = 8;
@@ -197,7 +187,7 @@
             this.Titrationcheck.Checked = true;
             this.Titrationcheck.CheckState = System.Windows.Forms.CheckState.Checked;
             this.Titrationcheck.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Titrationcheck.Location = new System.Drawing.Point(269, 29);
+            this.Titrationcheck.Location = new System.Drawing.Point(269, 24);
             this.Titrationcheck.Name = "Titrationcheck";
             this.Titrationcheck.Size = new System.Drawing.Size(181, 29);
             this.Titrationcheck.TabIndex = 9;
@@ -543,7 +533,7 @@
             this.derivative2.Checked = true;
             this.derivative2.CheckState = System.Windows.Forms.CheckState.Checked;
             this.derivative2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.derivative2.Location = new System.Drawing.Point(653, 29);
+            this.derivative2.Location = new System.Drawing.Point(478, 42);
             this.derivative2.Name = "derivative2";
             this.derivative2.Size = new System.Drawing.Size(176, 29);
             this.derivative2.TabIndex = 28;
@@ -675,6 +665,7 @@
             this.hplusnum.Name = "hplusnum";
             this.hplusnum.Size = new System.Drawing.Size(58, 33);
             this.hplusnum.TabIndex = 35;
+            this.hplusnum.SelectedIndexChanged += new System.EventHandler(this.change_protination);
             // 
             // Hplus
             // 
@@ -719,11 +710,39 @@
             this.linkLabel2.MouseLeave += new System.EventHandler(this.linkLabel2_MouseLeave);
             this.linkLabel2.MouseHover += new System.EventHandler(this.linkLabel2_MouseHover);
             // 
+            // Simulate
+            // 
+            this.Simulate.Enabled = false;
+            this.Simulate.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Simulate.ForeColor = System.Drawing.SystemColors.ButtonShadow;
+            this.Simulate.Location = new System.Drawing.Point(992, 505);
+            this.Simulate.Name = "Simulate";
+            this.Simulate.Size = new System.Drawing.Size(184, 33);
+            this.Simulate.TabIndex = 39;
+            this.Simulate.Text = "Simulate";
+            this.Simulate.UseVisualStyleBackColor = true;
+            this.Simulate.Click += new System.EventHandler(this.Simulation);
+            // 
+            // SimulatedSeries
+            // 
+            this.SimulatedSeries.AutoSize = true;
+            this.SimulatedSeries.Enabled = false;
+            this.SimulatedSeries.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SimulatedSeries.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.SimulatedSeries.Location = new System.Drawing.Point(850, 24);
+            this.SimulatedSeries.Name = "SimulatedSeries";
+            this.SimulatedSeries.Size = new System.Drawing.Size(134, 29);
+            this.SimulatedSeries.TabIndex = 40;
+            this.SimulatedSeries.Text = "Simulated";
+            this.SimulatedSeries.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1237, 590);
+            this.Controls.Add(this.SimulatedSeries);
+            this.Controls.Add(this.Simulate);
             this.Controls.Add(this.linkLabel2);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.Hplus);
@@ -747,7 +766,6 @@
             this.Controls.Add(this.Interceptpoints);
             this.Controls.Add(this.Derivcheck);
             this.Controls.Add(this.button2);
-            this.Controls.Add(this.simbutton);
             this.Controls.Add(this.Analyzebutton);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox4);
@@ -758,7 +776,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Form1";
-            this.Text = "OpenTitration - V 1.0.1 - Build : 2020/12/20";
+            this.Text = "OpenTitration - V 1.2.0 - Build : 2021/01/22";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
@@ -776,7 +794,6 @@
 
         private System.Windows.Forms.Button Analyzebutton;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button simbutton;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox formula;
         private System.Windows.Forms.Label label2;
@@ -816,7 +833,6 @@
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.ComboBox OffsetY2;
         private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.ComboBox hplusnum;
         private System.Windows.Forms.Label Hplus;
         private System.Windows.Forms.ComboBox Concentration;
         private System.Windows.Forms.ComboBox Equivalence;
@@ -828,6 +844,8 @@
         private System.Windows.Forms.LinkLabel linkLabel1;
         public System.Windows.Forms.DataVisualization.Charting.Chart chart1;
         private System.Windows.Forms.LinkLabel linkLabel2;
+        public System.Windows.Forms.ComboBox hplusnum;
+        private System.Windows.Forms.Button Simulate;
+        private System.Windows.Forms.CheckBox SimulatedSeries;
     }
 }
-

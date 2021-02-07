@@ -25,7 +25,6 @@ namespace Titration_Analyzer
             public List<double> pKavolumes = new List<double>();
             public List<double> PKavalues = new List<double>();
 
-
             private int storedPHlength { get; set; }
 
             private int PHderivcount { get; set; }
@@ -214,8 +213,6 @@ namespace Titration_Analyzer
                     titrationdatastorage.unkown += Convert.ToString(PKavalues[y]) + ",";
                 }
 
-
-
                 if (titrationdatastorage.isbase == false)
                 {
                     equivalencepointPH.Sort();
@@ -229,6 +226,133 @@ namespace Titration_Analyzer
                     PKavalues.Reverse();
                 }
 
+            }
+
+            public void FindGreatestManual()
+            {
+                titrationdatastorage.unkown = "";
+
+                var passes = titrationdatastorage.hplus;
+
+                List<double> tempsecondderivativerangeone = new List<double>(SecondDerivative);
+                List<double> tempsecondderivativerangetwo = new List<double>(SecondDerivative);
+                List<double> tempsecondderivativerangethree = new List<double>(SecondDerivative);
+                List<double> tempaveragevolumeone = new List<double>(tempaveragevolume);
+                List<double> tempaveragevolumetwo = new List<double>(tempaveragevolume);
+                List<double> tempaveragevolumethree = new List<double>(tempaveragevolume);
+
+                List<List<double>> tempsecondderivs = new List<List<double>>();
+                List<List<double>> tempaveragevolumecoll = new List<List<double>>();
+
+
+                int itemplaceone = 0;
+                int itemplacetwo = 0;
+                double rangevalue = 0;
+                int titrationsize = titrationdatastorage.titrationstorage.Count;
+
+
+                for (int i = 0; i < titrationsize; i++)
+                {
+                    var rangeequal = titrationdatastorage.titrationstorage[i].Split(',');
+
+                    if (titrationdatastorage.rangetype == "Volume")
+                    {
+                        rangevalue = Convert.ToDouble(rangeequal[0]);
+                    }
+                    else if (titrationdatastorage.rangetype == "pH")
+                    {
+                        rangevalue = Convert.ToDouble(rangeequal[1]);
+                    }
+
+                    if (rangevalue > titrationdatastorage.rangeone)
+                    {
+                        itemplaceone = i;
+                        break;
+                    }
+                }
+
+
+                tempsecondderivativerangeone.RemoveRange(itemplaceone, tempsecondderivativerangeone.Count - itemplaceone);
+                tempaveragevolumeone.RemoveRange(itemplaceone, tempaveragevolumeone.Count - itemplaceone);
+                tempsecondderivativerangetwo.RemoveRange(0, itemplaceone);
+                tempaveragevolumetwo.RemoveRange(0, itemplaceone);
+                tempsecondderivs.Add(tempsecondderivativerangeone);
+                tempaveragevolumecoll.Add(tempaveragevolumeone);
+
+                rangevalue = 0;
+
+                switch (titrationdatastorage.hplus)
+                {
+                    case 2:
+
+                        tempsecondderivs.Add(tempsecondderivativerangetwo);
+                        tempaveragevolumecoll.Add(tempaveragevolumetwo);
+                        break;
+                    case 3:
+                        for (int i = itemplaceone; i < titrationsize; i++)
+                        {
+                            var rangeequal = titrationdatastorage.titrationstorage[i].Split(',');
+
+                            if (titrationdatastorage.rangetype == "Volume")
+                            {
+                                rangevalue = Convert.ToDouble(rangeequal[0]);
+                            }
+                            else if (titrationdatastorage.rangetype == "pH")
+                            {
+                                rangevalue = Convert.ToDouble(rangeequal[1]);
+
+                            }
+
+                            if (rangevalue > titrationdatastorage.rangetwo)
+                            {
+                                itemplacetwo = i;
+                                break;
+                            }
+                        }
+
+                        tempsecondderivativerangetwo.RemoveRange(itemplacetwo - itemplaceone, tempsecondderivativerangetwo.Count - (itemplacetwo - itemplaceone));
+                        tempaveragevolumetwo.RemoveRange(itemplacetwo - itemplaceone, tempaveragevolumetwo.Count - (itemplacetwo - itemplaceone));
+
+                        tempsecondderivativerangethree.RemoveRange(0, itemplacetwo);
+                        tempaveragevolumethree.RemoveRange(0, itemplacetwo);
+
+
+                        tempsecondderivs.Add(tempsecondderivativerangetwo);
+                        tempsecondderivs.Add(tempsecondderivativerangethree);
+
+                        tempaveragevolumecoll.Add(tempaveragevolumetwo);
+                        tempaveragevolumecoll.Add(tempaveragevolumethree);
+
+                        break;
+
+                    default:
+                        break;
+                }
+
+                for (int i = 0; i < passes; i++)
+                {
+                    equivalencepoints.Add(GetEquivalenceManual(tempsecondderivs[i], tempaveragevolumecoll[i]));
+                    equivalencepointPH.Add(LinearInterpolatePHeq(equivalencepoints[i]));
+                }
+
+                pKavolumes.Add(equivalencepoints[0] / 2);
+
+                switch (passes)
+                {
+                    case 2:
+                        pKavolumes.Add(equivalencepoints[0] + ((equivalencepoints[1] - equivalencepoints[0]) / 2));
+                        break;
+                    case 3:
+                        pKavolumes.Add(equivalencepoints[0] + ((equivalencepoints[1] - equivalencepoints[0]) / 2));
+                        pKavolumes.Add(equivalencepoints[1] + ((equivalencepoints[2] - equivalencepoints[1]) / 2));
+                        break;
+                }
+
+                for (int y = 0; y < passes; y++)
+                {
+                    PKavalues.Add(GetPKA(pKavolumes[y]));
+                    titrationdatastorage.unkown += Convert.ToString(PKavalues[y]) + ",";
+                }
 
             }
 
@@ -410,6 +534,39 @@ namespace Titration_Analyzer
 
                 return Math.Round(linearinterpolatedPHequiv, 4);
 
+            }
+            public double getmaxvolume()
+            {
+                var finalcount = titrationdatastorage.titrationstorage.Count;
+                var maxvolumestring = titrationdatastorage.titrationstorage[finalcount - 1].Split(',');
+                if (titrationdatastorage.rangetype == "pH")
+                {
+                    return Convert.ToDouble(maxvolumestring[1]);
+                }
+                else if (titrationdatastorage.rangetype == "Volume")
+                {
+                    return Convert.ToDouble(maxvolumestring[0]);
+                }
+                else
+                {
+                    return 0;
+                }
+
+            }
+            public double GetEquivalenceManual(List<double> secondderivative, List<double> averagevolume)
+            {
+                double minimumderiv = secondderivative.Min(); //y2
+                double maximumderiv = secondderivative.Max(); //y1
+                int minimumvolumenum = secondderivative.IndexOf(minimumderiv);
+                double minimumvolume = averagevolume[minimumvolumenum]; //x2
+                int maximumvolumenum = secondderivative.IndexOf(maximumderiv);
+                double maximumvolume = averagevolume[maximumvolumenum]; //x1
+
+                double slopeM = ((minimumderiv - maximumderiv) / ((minimumvolume - maximumvolume)));
+
+                double equivalncepointintercept = (((maximumvolume * slopeM) - maximumderiv) / slopeM);
+
+                return equivalncepointintercept;
             }
 
             public double GetEquivalence()

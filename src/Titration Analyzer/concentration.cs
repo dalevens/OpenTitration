@@ -6,15 +6,14 @@ namespace Titration_Analyzer
     {
         public class concentration
         {
-            public double ReturnConcentration(string equivalence, string titrantconc, string molarratio, string analytevolume, string dilutonfact)
+            public double ReturnConcentration(double equivalence, string titrantconc, string molarratio, string analytevolume, string dilutonfact)
             {
-                var splitPhandPka = equivalence.Split(',');
 
                 var ratiosplit = molarratio.Split(':');
 
                 var molerationum = Convert.ToDouble(ratiosplit[1]) / Convert.ToDouble(ratiosplit[0]);
 
-                var acidconcentration = Convert.ToDouble(splitPhandPka[1]);
+                var acidconcentration = equivalence;
 
                 return (((acidconcentration * Convert.ToDouble(titrantconc) * molerationum) * (1 / Convert.ToDouble(analytevolume))) * Convert.ToDouble(dilutonfact));
 

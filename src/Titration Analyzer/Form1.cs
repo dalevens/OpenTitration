@@ -11,8 +11,11 @@ namespace Titration_Analyzer
 {
     public partial class Form1 : Form
     {
+
         public static class titrationdatastorage
         {
+
+
             public static List<string> titrationstorage = new List<string>();
             public static List<string> completedataset = new List<string>();
             public static int normy1;
@@ -22,6 +25,23 @@ namespace Titration_Analyzer
             public static string unkown;
             public static bool isbase;
 
+            //Simulator Settings
+            public static bool StrongAcidorBase;
+            public static string pkavalues;
+            public static double a_vol_Global;
+            public static double a_conc_Global;
+            public static double t_conc_Global;
+            public static double maxvolume;
+            public static double resolution;
+            public static string defaultpythonpath;
+            public static string pythonpath;
+
+
+            //Calculation Settings
+            public static string solvemethod;
+            public static string rangetype;
+            public static double rangeone;
+            public static double rangetwo { get; set; }
 
             //Graph Settings
             public static int iterationsetting;
@@ -56,13 +76,39 @@ namespace Titration_Analyzer
             NormY1.Text = "6";
             NormY2.Text = "4";
             OffsetY2.Text = "2";
-            hplusnum.Text = "1";
             acidbase = "Acid";
             pkapkb = "pKa";
+            hplusnum.Text = Convert.ToString(Properties.Settings.Default.HPlus);
 
             titrationdatastorage.isbase = false;
 
+            //Simulator Settings
+            titrationdatastorage.resolution = Properties.Settings.Default.Resolution;
+            titrationdatastorage.StrongAcidorBase = Properties.Settings.Default.StrongAcidorBase;
+
+            titrationdatastorage.defaultpythonpath = Application.StartupPath + @"\python_env\Scripts\python.exe";
+
+            //This determines if the default path has been selected, or another path is to be selected.
+
+            if (Properties.Settings.Default.CustomPythonPath == false)
+            {
+                Properties.Settings.Default.PythonPath = titrationdatastorage.defaultpythonpath;
+                titrationdatastorage.pythonpath = titrationdatastorage.defaultpythonpath;
+            }
+            else
+            {
+                titrationdatastorage.pythonpath = Properties.Settings.Default.PythonPath;
+            }
+
+            //Calc Settings
+            titrationdatastorage.rangeone = Properties.Settings.Default.Range1;
+            titrationdatastorage.rangetwo = Properties.Settings.Default.Range2;
+            titrationdatastorage.rangetype = Properties.Settings.Default.RangeType;
+            titrationdatastorage.iterationsetting = Properties.Settings.Default.Iterationsetting;
+            titrationdatastorage.solvemethod = Properties.Settings.Default.SolveMethod;
+
             //Chart settings
+            titrationdatastorage.hplus = Properties.Settings.Default.HPlus;
             titrationdatastorage.linethickness = Properties.Settings.Default.linethickness;
             titrationdatastorage.interceptlabelstext = Properties.Settings.Default.interceptlabelstext;
             titrationdatastorage.interceptlabelssize = Properties.Settings.Default.interceptlabelssiz;
@@ -70,7 +116,6 @@ namespace Titration_Analyzer
             titrationdatastorage.yaxisgraphsize = Properties.Settings.Default.yaxisgraphsize;
             titrationdatastorage.xaxislabeltext = Properties.Settings.Default.xaxislabeltext;
             titrationdatastorage.yaxislabeltext = Properties.Settings.Default.yaxislabeltext;
-            titrationdatastorage.iterationsetting = Properties.Settings.Default.Iterationsetting;
 
             //PDF settings
             titrationdatastorage.margins = Properties.Settings.Default.margins;
@@ -80,7 +125,6 @@ namespace Titration_Analyzer
             titrationdatastorage.resultsfont = Properties.Settings.Default.resultsfont;
             titrationdatastorage.resultssize = Properties.Settings.Default.resultssize;
 
-            // Graph data
             titrationdatastorage.grapheddata = false;
             titrationdatastorage.graphderiv = false;
         }
@@ -111,6 +155,37 @@ namespace Titration_Analyzer
 
 
 
+        }
+
+        private void findpython()
+        {
+            String username = Environment.UserName;
+
+            String pythondirectory = "C:\\Users\\" + username + "\\AppData\\Local\\Programs\\Python\\";
+
+            String[] pythondirectories = Directory.GetDirectories(pythondirectory);
+
+            String StoredPythonEXEdirectory = "";
+
+            foreach (string direct in pythondirectories)
+            {
+                var testingpythondirectory = direct + "\\python.exe";
+
+                if (File.Exists(testingpythondirectory) == true)
+                {
+                    StoredPythonEXEdirectory = testingpythondirectory;
+                    break;
+                }
+            }
+
+            if (StoredPythonEXEdirectory == "")
+            {
+                MessageBox.Show("Python.exe could not be found");
+            }
+            else
+            {
+                MessageBox.Show("Your python directory is: " + StoredPythonEXEdirectory);
+            }
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -185,7 +260,62 @@ namespace Titration_Analyzer
             Equivalence.Items.Clear();
             PKA.Items.Clear();
             Concentration.Items.Clear();
-            importdata.findgreatest();
+
+            var maxvolume = importdata.getmaxvolume();
+            titrationdatastorage.maxvolume = maxvolume;
+
+            if (titrationdatastorage.solvemethod == "Automatic")
+            {
+                try
+                {
+                    importdata.findgreatest();
+
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Insufficient data points. Adjust the peak sensitivity, or try switching to the manual range mode.", "Error: Insufficient Datapoints", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    goto Finish;
+                }
+            }
+            else if (titrationdatastorage.solvemethod == "Manual Range")
+            {
+                //var maxvolume = importdata.getmaxvolume();
+
+                if (maxvolume < titrationdatastorage.rangeone || maxvolume < titrationdatastorage.rangetwo)
+                {
+                    MessageBox.Show("Your chosen value for the " + titrationdatastorage.rangetype.ToLower() + " range exceeds the maximum value. An automatic value was assigned for this analysis.", "Error: Manual Input Exceeded Range", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    if (titrationdatastorage.hplus == 2)
+                    {
+                        titrationdatastorage.rangeone = maxvolume / 2;
+                        Properties.Settings.Default.Range1 = maxvolume / 2;
+                    }
+                    else if (titrationdatastorage.hplus == 3)
+                    {
+                        titrationdatastorage.rangeone = maxvolume / 3;
+                        Properties.Settings.Default.Range1 = maxvolume / 3;
+                        titrationdatastorage.rangetwo = (maxvolume / 3) * 2;
+                        Properties.Settings.Default.Range2 = (maxvolume / 3) * 2;
+                    }
+                }
+                if (titrationdatastorage.rangeone == 0 || titrationdatastorage.rangetwo == 0)
+                {
+                    MessageBox.Show("Non-zero numbers are needed for the manual range calculation mode. An automatic value was assigned for this analysis.", "Error: Manual Input With 0 As Entry", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    if (titrationdatastorage.hplus == 2)
+                    {
+                        titrationdatastorage.rangeone = maxvolume / 2;
+                        Properties.Settings.Default.Range1 = maxvolume / 2;
+                    }
+                    else if (titrationdatastorage.hplus == 3)
+                    {
+                        titrationdatastorage.rangeone = maxvolume / 3;
+                        Properties.Settings.Default.Range1 = maxvolume / 3;
+                        titrationdatastorage.rangetwo = (maxvolume / 3) * 2;
+                        Properties.Settings.Default.Range2 = (maxvolume / 3) * 2;
+                    }
+                }
+                importdata.FindGreatestManual();
+            }
+
             chart1.Series.Add(importdata.AddPoints());
 
             ChangeSeries();
@@ -201,6 +331,8 @@ namespace Titration_Analyzer
 
             var unkownaciddetermin = new unkownacid(titrationdatastorage.hplus, titrationdatastorage.isbase);
 
+            titrationdatastorage.pkavalues = unkownaciddetermin.acidorbasevalues;
+
             unkownacid.Text = unkownaciddetermin.DetermineUnkown(titrationdatastorage.unkown, titrationdatastorage.hplus) + " (" + Convert.ToString(unkownaciddetermin.percentmatch) + "%) match";
 
             var concentrationdetermin = new concentration();
@@ -209,34 +341,47 @@ namespace Titration_Analyzer
 
             try
             {
-                foreach (var equiv in Equivalence.Items)
+                foreach (var equiv in importdata.equivalencepoints)
                 {
                     if (Concknown.Checked == false)
                     {
                         TitConc.Text = Convert.ToString(Math.Round(concentrationdetermin.TitrantConcentration(Molarmass.Text, mass.Text, Volumetit.Text), 4));
-                        Concentration.Items.Add(concentrationnum + "# " + Convert.ToString(concentrationdetermin.ReturnConcentration(equiv.ToString(), TitConc.Text, MolarRatio.Text, volumeanal.Text, dilutionfactor.Text)));
+                        Concentration.Items.Add(concentrationnum + "# " + Convert.ToString(concentrationdetermin.ReturnConcentration(equiv, TitConc.Text, MolarRatio.Text, volumeanal.Text, dilutionfactor.Text)));
                         concentrationnum++;
                     }
                     else if (Concknown.Checked == true)
                     {
-                        Concentration.Items.Add(concentrationnum + "# " + Convert.ToString(concentrationdetermin.ReturnConcentration(equiv.ToString(), TitConc.Text, MolarRatio.Text, volumeanal.Text, dilutionfactor.Text)));
+                        Concentration.Items.Add(concentrationnum + "# " + Convert.ToString(concentrationdetermin.ReturnConcentration(equiv, TitConc.Text, MolarRatio.Text, volumeanal.Text, dilutionfactor.Text)));
                         concentrationnum++;
                     }
                 }
             }
+
             catch (Exception)
             {
                 MessageBox.Show("Not all the proper fields are filled out in the correct format", "Error: Failure to Compute Concentration", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            Concentration.Text = Convert.ToString(concentrationdetermin.ReturnConcentration(Equivalence.Text, TitConc.Text, MolarRatio.Text, volumeanal.Text, dilutionfactor.Text));
+            Concentration.Text = Convert.ToString(Math.Round(concentrationdetermin.ReturnConcentration(importdata.equivalencepoints[0], TitConc.Text, MolarRatio.Text, volumeanal.Text, dilutionfactor.Text), 4));
+
+
 
             importdata.DataStore();
+
+            titrationdatastorage.a_vol_Global = Convert.ToDouble(volumeanal.Text);
+            titrationdatastorage.a_conc_Global = Convert.ToDouble(Concentration.Text);
+            titrationdatastorage.t_conc_Global = Convert.ToDouble(TitConc.Text);
 
             Derivcheck.Checked = true;
             Interceptpoints.Checked = true;
             derivative2.Checked = true;
+            Simulate.Enabled = true;
+            Simulate.ForeColor = Color.Black;
+
+        Finish:;
+
+
         }
 
         private void Import(object sender, EventArgs e)
@@ -484,16 +629,26 @@ namespace Titration_Analyzer
 
             File.Delete(directory + "\\tempchart.png");
 
-
-
             PdfPage page2 = documentobject.AddPage();
             XGraphics gfx2 = XGraphics.FromPdfPage(page2);
 
             gfx2.DrawString("Volume(mL),PH,Y',Y''", fontcaption, XBrushes.Black, new XRect(indent, spacing, page.Width, page.Height), XStringFormats.TopLeft);
 
             var pagesize2 = 2;
+            var pagenumber = 2;
+
             foreach (string data in titrationdatastorage.completedataset)
             {
+                var maxpagesize = spacing * pagesize2;
+
+                if (maxpagesize >= 800)
+                {
+                    var newpage = documentobject.AddPage();
+                    gfx2 = XGraphics.FromPdfPage(newpage);
+                    pagesize2 = 2;
+                    pagenumber++;
+                }
+
                 gfx2.DrawString(data, font, XBrushes.Black, new XRect(indent, spacing * pagesize2, page.Width, page.Height), XStringFormats.TopLeft);
                 pagesize2++;
             }
@@ -541,84 +696,6 @@ namespace Titration_Analyzer
 
             }
         }
-
-        private void Simulate(object sender, EventArgs e)
-        {
-            // Preset variables. Remove these later when we know what goes where from the main set of variables
-            bool a_acidic = true;
-            bool t_acidic = !a_acidic;
-            string a_pK = "5.2,8.9";
-            string t_pK = "-1";
-            bool a_strong = false;
-            bool t_strong = true;
-
-            double a_vol = 20;
-            double a_conc = 0.1;
-            double t_conc = 0.1;
-
-
-            ProcessStartInfo start = new ProcessStartInfo();
-
-
-            // Create Process Info
-                // TODO The filename needs to be the directory of python.exe
-                // Can be found in python_env\Scripts\python.exe
-                // Needs the full directory, not just the filename
-            start.FileName = @"\python_env\Scripts\python.exe";
-
-
-            // 2) Provide script and arguments
-                // TODO var script should be the directory for script.py
-                // Needs the full directory, not just the filename
-            var script = @"script.py";
-            start.Arguments = string.Format("{0} {1} {2} {3} {4} {5} {6} {7} {8} {9}", script, a_acidic, t_acidic, a_pK, t_pK, a_strong, t_strong, a_vol, a_conc, t_conc);
-
-            // 3) Process configuration
-            start.UseShellExecute = false;
-            start.RedirectStandardOutput = true;
-            start.RedirectStandardError = true;
-
-            // 4) Execute process and get output
-            using (Process process = Process.Start(start))
-            {
-                // Get the data from the printed output of the script.py
-                var results = process.StandardOutput.ReadToEnd();
-
-                // Split the printed statements by the newline separating them. Also remove all square brackets and spaces
-                string[] split_results = results.Split(new[] { '\n' }, StringSplitOptions.None);
-                var data_list = new List<string> { };
-                foreach (string item in split_results)
-                {
-                    data_list.Add(item.Trim(new Char[] { ']', '[', ' ', '\r' }).Trim());
-                }
-
-                // Remove the third item in the list, which is just an null value
-                data_list.RemoveAt(2);
-
-                // Turn the block strings into lists of strings
-                string[] simPhStr = data_list[0].Split(new[] { ',' }, StringSplitOptions.None);
-                string[] simVolStr = data_list[1].Split(new[] { ',' }, StringSplitOptions.None);
-
-                var simPhLs = new List<double> { };
-                var simVolLs = new List<double> { };
-
-                // Convert the substrings in each list to doubles
-                foreach (string item in simPhStr)
-                {
-                    simPhLs.Add(double.Parse(item.Trim()));
-                }
-
-                foreach (string item in simVolStr)
-                {
-                    simVolLs.Add(double.Parse(item.Trim()));
-                }
-                MessageBox.Show(simVolLs[0].ToString());
-                // simVolLs and simPhLs are the Volumes an pH values for the simulated titration
-                // They are trimmed to be representative of the whole titration, not the range the user set.
-                }
-
-        }
-
 
         private void secondselect(object sender, EventArgs e)
         {
@@ -687,8 +764,17 @@ namespace Titration_Analyzer
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Settings settingsform = new Settings(this);
-
+            settingsform.hplustrans += new EventHandler(Proton_DataAvailable);
             settingsform.Show();
+        }
+
+        void Proton_DataAvailable(object sender, EventArgs e)
+        {
+            Settings proton = sender as Settings;
+            if (proton != null)
+            {
+                hplusnum.Text = proton.hplusstatetransfer;
+            }
         }
 
         private void linkLabel1_MouseHover(object sender, EventArgs e)
@@ -743,6 +829,123 @@ namespace Titration_Analyzer
 
 
                 }
+            }
+        }
+
+        private void change_protination(object sender, EventArgs e)
+        {
+            titrationdatastorage.hplus = Convert.ToInt32(hplusnum.Text);
+            Properties.Settings.Default.HPlus = Convert.ToInt32(hplusnum.Text);
+        }
+
+        private void Formula_TextChanged(object sender, EventArgs e)
+        {
+            Molarmass.Text = "";
+        }
+
+        private void Simulation(object sender, EventArgs e)
+        {
+            SimulatedSeries.Checked = true;
+            SimulatedSeries.Enabled = true;
+            SimulatedSeries.ForeColor = Color.Black;
+
+            // Variables for titrant and analyte being base or acid
+            bool a_acidic = !titrationdatastorage.isbase;
+            bool t_acidic = titrationdatastorage.isbase;
+
+            //string a_pK = "5.2,8.9";
+            //collected pKa variables for unkown. Only will work if analysis of regular titration data has been completed.
+            string a_pK = titrationdatastorage.pkavalues;
+
+            //will have to be taken from internal dictionary
+            string t_pK = "-1";
+
+            bool a_strong = false; //how would you like to determine whether the analyte is strong or not? Right now there is no option for it.
+            bool t_strong = titrationdatastorage.StrongAcidorBase;
+
+            //The data needed will only be loaded once the titration data of the origonal sample
+            //Has been successfully analyzed.
+
+            double a_vol = titrationdatastorage.a_vol_Global;
+            double a_conc = titrationdatastorage.a_conc_Global;
+            double t_conc = titrationdatastorage.t_conc_Global;
+
+            //Here is the volume that the simulated data should be generated to. From 0 to the max
+            //Of the origonal titration data.
+
+            double simulationvolume = titrationdatastorage.maxvolume;
+
+            //Here is a setting that allows you to set what data points are calculated for the simulator
+            //Are you okay with adding this, or is this too much work?
+
+            double resolution = titrationdatastorage.resolution;
+
+
+            ProcessStartInfo start = new ProcessStartInfo();
+
+
+            // Create Process Info
+            // TODO The filename needs to be the directory of python.exe
+            // Can be found in python_env\Scripts\python.exe
+            // Needs the full directory, not just the filename
+
+            String pythonfilepath = Application.StartupPath + @"\python_env\Scripts\python.exe";
+
+            //Because this is going into an install filepath with the stand alone installer
+            //Every file needs to be in the release directory
+            //I will have to figure out how to transfer many files at once though
+
+            start.FileName = titrationdatastorage.pythonpath;
+
+
+            // 2) Provide script and arguments
+            // TODO var script should be the directory for script.py
+            // Needs the full directory, not just the filename
+            var script = Application.StartupPath + @"script.py";
+            start.Arguments = string.Format("{0} {1} {2} {3} {4} {5} {6} {7} {8} {9}", script, a_acidic, t_acidic, a_pK, t_pK, a_strong, t_strong, a_vol, a_conc, t_conc);
+
+            // 3) Process configuration
+            start.UseShellExecute = false;
+            start.RedirectStandardOutput = true;
+            start.RedirectStandardError = true;
+
+            // 4) Execute process and get output
+            using (Process process = Process.Start(start))
+            {
+                // Get the data from the printed output of the script.py
+                var results = process.StandardOutput.ReadToEnd();
+
+                // Split the printed statements by the newline separating them. Also remove all square brackets and spaces
+                string[] split_results = results.Split(new[] { '\n' }, StringSplitOptions.None);
+                var data_list = new List<string> { };
+                foreach (string item in split_results)
+                {
+                    data_list.Add(item.Trim(new Char[] { ']', '[', ' ', '\r' }).Trim());
+                }
+
+                // Remove the third item in the list, which is just an null value
+                data_list.RemoveAt(2);
+
+                // Turn the block strings into lists of strings
+                string[] simPhStr = data_list[0].Split(new[] { ',' }, StringSplitOptions.None);
+                string[] simVolStr = data_list[1].Split(new[] { ',' }, StringSplitOptions.None);
+
+                var simPhLs = new List<double> { };
+                var simVolLs = new List<double> { };
+
+                // Convert the substrings in each list to doubles
+                foreach (string item in simPhStr)
+                {
+                    simPhLs.Add(double.Parse(item.Trim()));
+                }
+
+                foreach (string item in simVolStr)
+                {
+                    simVolLs.Add(double.Parse(item.Trim()));
+                }
+                MessageBox.Show(simVolLs[0].ToString());
+                // simVolLs and simPhLs are the Volumes an pH values for the simulated titration
+                // They are trimmed to be representative of the whole titration, not the range the user set.
             }
         }
     }
