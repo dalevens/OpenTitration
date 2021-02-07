@@ -891,9 +891,9 @@ namespace Titration_Analyzer
 
             String pythonfilepath = Application.StartupPath + @"\python_env\Scripts\python.exe";
 
-            //Because this is going into an install filepath with the stand alone installer
-            //Every file needs to be in the release directory
-            //I will have to figure out how to transfer many files at once though
+            // Because this is going into an install filepath with the stand alone installer
+            // Every file needs to be in the release directory
+            // I will have to figure out how to transfer many files at once though
 
             start.FileName = titrationdatastorage.pythonpath;
 
