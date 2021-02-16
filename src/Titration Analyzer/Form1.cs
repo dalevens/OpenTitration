@@ -860,8 +860,8 @@ namespace Titration_Analyzer
             //will have to be taken from internal dictionary
             string t_pK = "-1";
 
-            bool a_strong = false; //how would you like to determine whether the analyte is strong or not? Right now there is no option for it.
-            bool t_strong = titrationdatastorage.StrongAcidorBase;
+            //bool a_strong = false; //how would you like to determine whether the analyte is strong or not? Right now there is no option for it.
+            //bool t_strong = titrationdatastorage.StrongAcidorBase;
 
             //The data needed will only be loaded once the titration data of the origonal sample
             //Has been successfully analyzed.
@@ -901,8 +901,11 @@ namespace Titration_Analyzer
             // 2) Provide script and arguments
             // TODO var script should be the directory for script.py
             // Needs the full directory, not just the filename
-            var script = Application.StartupPath + @"script.py";
-            start.Arguments = string.Format("{0} {1} {2} {3} {4} {5} {6} {7} {8} {9}", script, a_acidic, t_acidic, a_pK, t_pK, a_strong, t_strong, a_vol, a_conc, t_conc);
+            var script = Application.StartupPath + @"\script.py";
+            start.Arguments = string.Format("{0} {1} {2} {3} {4} {5} {6} {7} {8}", script, a_acidic, t_acidic, a_pK, t_pK, a_vol, a_conc, t_conc, resolution);
+
+            MessageBox.Show(script.ToString());
+
 
             // 3) Process configuration
             start.UseShellExecute = false;
@@ -914,6 +917,10 @@ namespace Titration_Analyzer
             {
                 // Get the data from the printed output of the script.py
                 var results = process.StandardOutput.ReadToEnd();
+                var errors = process.StandardError.ReadToEnd();
+                MessageBox.Show(errors);
+                MessageBox.Show(results);
+
 
                 // Split the printed statements by the newline separating them. Also remove all square brackets and spaces
                 string[] split_results = results.Split(new[] { '\n' }, StringSplitOptions.None);
