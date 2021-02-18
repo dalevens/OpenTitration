@@ -110,8 +110,8 @@ class Bjerrum(AcidBase):
         k = array(k)
 
         # If the k values are for K_b, convert to K_a. --> K_1 = K_w / K_n , K_2 = K_w / K_(n-1)...
-        if not acid:
-            k = self.kw / flip(k)
+        # if not acid:
+        #    k = self.kw / flip(k)
 
         # The functionality of an acid or base can be determined by the number of dissociation constants it has.
         n = len(k)
