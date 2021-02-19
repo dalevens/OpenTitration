@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30330.147
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Titration Analyzer", "Titration Analyzer\Titration Analyzer.csproj", "{6EB568ED-81E6-4BCD-8467-0080149B18D8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Titration_Analyzer", "Titration_Analyzer\Titration Analyzer.csproj", "{6EB568ED-81E6-4BCD-8467-0080149B18D8}"
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "OpenTitrationInstaller", "OpenTitrationInstaller\OpenTitrationInstaller.wixproj", "{486F7F85-E833-46A4-BB18-52BF3AB2E234}"
 EndProject
