@@ -15,13 +15,13 @@ namespace Titration_Analyzer
 
                 var acidconcentration = equivalence;
 
-                return (((acidconcentration * Convert.ToDouble(titrantconc) * molerationum) * (1 / Convert.ToDouble(analytevolume))) * Convert.ToDouble(dilutonfact));
+                return (((acidconcentration * Convert.ToDouble(titrantconc) * molerationum) * (1/ Convert.ToDouble(analytevolume))) * Convert.ToDouble(dilutonfact));
 
             }
 
             public double TitrantConcentration(string molarmass, string mass, string volume)
             {
-                return (Convert.ToDouble(mass) / Convert.ToDouble(molarmass)) / (Convert.ToDouble(volume) / 1000);
+                return (Convert.ToDouble(mass)/Convert.ToDouble(molarmass)) / (Convert.ToDouble(volume)/1000);
             }
 
             public double MolarRatio(string molarratio)

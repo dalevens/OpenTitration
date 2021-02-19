@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Text;
-using System.IO;
 using System.Windows.Forms;
+using System.IO;
 
 namespace Titration_Analyzer
 {
@@ -35,11 +35,11 @@ namespace Titration_Analyzer
 
         public Settings(Form1 opentitration)
         {
-
+            
             titrationanal = opentitration;
 
             InitializeComponent();
-
+            
             hplusstate.Text = Convert.ToString(Properties.Settings.Default.HPlus);
 
             //Simulator Settings
@@ -48,12 +48,13 @@ namespace Titration_Analyzer
             millneg2.Text = Convert.ToString(Form1.titrationdatastorage.resolution - Math.Round(Form1.titrationdatastorage.resolution, 2));
             DirectoryPython.Text = Properties.Settings.Default.PythonPath;
             Default.Checked = !Properties.Settings.Default.CustomPythonPath;
-            StrongAcid.Checked = Properties.Settings.Default.StrongAcidorBase;
+            StrongAcid.Checked = Form1.titrationdatastorage.StrongAcidorBase;
+            CustompKa.Checked = Form1.titrationdatastorage.custompKaselect;
+            TargetRangeType.Text = Form1.titrationdatastorage.rangetype;
+            SolveMethod.Text = Form1.titrationdatastorage.solvemethod;
+            CustompKa.Text = Form1.titrationdatastorage.custompKa;
 
-            TargetRangeType.Text = Properties.Settings.Default.RangeType;
-            SolveMethod.Text = Properties.Settings.Default.SolveMethod;
-
-            if (SolveMethod.Text == "Automatic")
+            if (SolveMethod.Text == "Automatic" )
             {
                 TargetRangeType.Enabled = false;
                 rangeone.Enabled = false;
@@ -62,8 +63,8 @@ namespace Titration_Analyzer
                 rangetwo.BackColor = Color.Beige;
 
                 Customdatcheck.Checked = Properties.Settings.Default.ManualSensitivity;
-
-                if (Customdatcheck.Checked == true)
+                
+                if(Customdatcheck.Checked == true)
                 {
                     Sensitivitymanual.Enabled = true;
                 }
@@ -71,17 +72,17 @@ namespace Titration_Analyzer
                 {
                     Sensitivitymanual.Enabled = false;
                 }
-
+               
                 Customdatcheck.Enabled = true;
                 Sensitivitymanual.Enabled = true;
                 Sensitivitymanual.BackColor = Color.White;
             }
-            else if (SolveMethod.Text == "Manual Range")
+            else if(SolveMethod.Text == "Manual Range")
             {
                 TargetRangeType.Text = Properties.Settings.Default.RangeType;
                 rangeone.Text = Convert.ToString(Properties.Settings.Default.Range1);
                 TargetRangeType.Enabled = true;
-                if (hplusstate.Text == "2")
+                if(hplusstate.Text == "2")
                 {
                     rangetwo.Enabled = false;
                     rangetwo.BackColor = Color.Beige;
@@ -93,16 +94,16 @@ namespace Titration_Analyzer
                     rangetwo.Text = Convert.ToString(Properties.Settings.Default.Range2);
                     rangetwo.BackColor = Color.White;
                 }
-
+                
                 rangeone.Enabled = true;
                 rangeone.Text = Convert.ToString(Properties.Settings.Default.Range1);
                 rangeone.BackColor = Color.White;
+               
 
-
-
+            
             }
 
-            if (Customdatcheck.Checked == false)
+            if(Customdatcheck.Checked == false)
             {
                 Sensitivitymanual.Enabled = false;
 
@@ -110,7 +111,7 @@ namespace Titration_Analyzer
 
                 Sensitivty.Text = Convert.ToString(Form1.titrationdatastorage.iterationsetting);
             }
-            else if (Customdatcheck.Checked == true)
+            else if(Customdatcheck.Checked == true)
             {
                 Sensitivitymanual.Enabled = true;
 
@@ -121,16 +122,16 @@ namespace Titration_Analyzer
                 Sensitivty.Enabled = false;
             }
 
-
+            
 
             InterceptFont.Items.Add(Form1.titrationdatastorage.interceptlabelstext);
-
+            
             xaxisfont.Items.Add(Form1.titrationdatastorage.xaxislabeltext);
-
+           
             yaxisfont.Items.Add(Form1.titrationdatastorage.yaxislabeltext);
-
+            
             HeadingsText.Items.Add(Form1.titrationdatastorage.headerfont);
-
+           
             ResultsText.Items.Add(Form1.titrationdatastorage.resultsfont);
 
             SolveMethod.Text = Convert.ToString(Form1.titrationdatastorage.solvemethod);
@@ -148,8 +149,8 @@ namespace Titration_Analyzer
             margins.Text = Convert.ToString(Form1.titrationdatastorage.margins);
             Spacingpdf.Text = Convert.ToString(Form1.titrationdatastorage.spacing);
             linewidth = linedemonstrator.Width;
-            lineheight = linedemonstrator.Height / 2;
-
+            lineheight = linedemonstrator.Height/2;
+            
         }
 
         Graphics g = null;
@@ -173,7 +174,7 @@ namespace Titration_Analyzer
 
             installedfonts = installedfontcollection.Families;
 
-            foreach (var font in installedfonts)
+            foreach(var font in installedfonts)
             {
                 selectedcombobox.Items.Add(font.Name);
             }
@@ -206,10 +207,10 @@ namespace Titration_Analyzer
             StrongAcid.Checked = true;
             DirectoryPython.Text = Form1.titrationdatastorage.defaultpythonpath;
             Default.Checked = true;
-
+            CustompKa.Checked = false;
             Sensitivitymanual.Text = "";
             TargetRangeType.Text = "Volume";
-
+            CustompKa.Text = "";
 
             if (Form1.titrationdatastorage.titrationstorage.Count == 0)
             {
@@ -220,20 +221,20 @@ namespace Titration_Analyzer
             {
                 var rangefind = new Form1.adddata();
                 var maxvolume = rangefind.getmaxvolume();
-                if (hplusstate.Text == "1")
+                if(hplusstate.Text == "1")
                 {
                     rangeone.Text = "0";
                     rangetwo.Text = "0";
                 }
-                else if (hplusstate.Text == "2")
+                else if(hplusstate.Text == "2")
                 {
                     rangeone.Text = Convert.ToString(Math.Round(maxvolume / 2, 2));
                     rangetwo.Text = "0";
                 }
-                else if (hplusstate.Text == "3")
+                else if(hplusstate.Text == "3")
                 {
                     rangeone.Text = Convert.ToString(Math.Round(maxvolume / 3, 2));
-                    rangetwo.Text = Convert.ToString(Math.Round((maxvolume / 3) * 2, 2));
+                    rangetwo.Text = Convert.ToString(Math.Round((maxvolume / 3)*2, 2));
                 }
             }
 
@@ -243,7 +244,7 @@ namespace Titration_Analyzer
             SolveMethod.Text = "Automatic";
 
             automatic_select();
-
+            
             InterceptFont.Items.Add("Microsoft Sans Serif");
             yaxisfont.Items.Add("Microsoft Sans Serif");
             xaxisfont.Items.Add("Microsoft Sans Serif");
@@ -269,12 +270,16 @@ namespace Titration_Analyzer
         private void Save_Settings(object sender, EventArgs e)
         {
             //Simulator Settings
-
+            
             Form1.titrationdatastorage.resolution = Convert.ToDouble(millneg1.Text) + Convert.ToDouble(millneg2.Text);
             Properties.Settings.Default.Resolution = Convert.ToDouble(millneg1.Text) + Convert.ToDouble(millneg2.Text);
             Form1.titrationdatastorage.StrongAcidorBase = StrongAcid.Checked;
             Form1.titrationdatastorage.pythonpath = DirectoryPython.Text;
             Properties.Settings.Default.CustomPythonPath = Default.Checked;
+            Properties.Settings.Default.CustompKaselect = CustompKa.Checked;
+            Form1.titrationdatastorage.custompKaselect = CustompKa.Checked;
+            Form1.titrationdatastorage.custompKa = CustompKa.Text;
+            Properties.Settings.Default.CustompKa = CustompKa.Text;
 
             //Saves the settings so that it can be saved to the system
             //Calc Settings
@@ -282,7 +287,7 @@ namespace Titration_Analyzer
             Properties.Settings.Default.HPlus = Convert.ToInt32(hplusstate.Text);
             Properties.Settings.Default.SolveMethod = SolveMethod.Text;
             Properties.Settings.Default.RangeType = TargetRangeType.Text;
-
+            
             //Graph Settings
             Properties.Settings.Default.linethickness = Convert.ToInt32(LineThickness.Text);
             Properties.Settings.Default.interceptlabelstext = InterceptFont.Text;
@@ -297,7 +302,7 @@ namespace Titration_Analyzer
             {
                 Properties.Settings.Default.Iterationsetting = Convert.ToInt32(Sensitivty.Text);
             }
-            else if (Customdatcheck.Checked == true)
+            else if(Customdatcheck.Checked == true)
             {
                 try
                 {
@@ -308,10 +313,10 @@ namespace Titration_Analyzer
                     MessageBox.Show("This field requires an integer", "Error: Not an Integer", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     Sensitivty.Text = "2";
                     Properties.Settings.Default.Iterationsetting = Convert.ToInt32(Sensitivty.Text);
-
+      
                 }
             }
-
+            
             //PDF settings
             Properties.Settings.Default.margins = Convert.ToInt32(margins.Text);
             Properties.Settings.Default.spacing = Convert.ToDouble(Spacingpdf.Text);
@@ -373,12 +378,12 @@ namespace Titration_Analyzer
             Form1.titrationdatastorage.yaxisgraphsize = Convert.ToInt32(yaxisSize.Text);
             Form1.titrationdatastorage.xaxislabeltext = xaxisfont.Text;
             Form1.titrationdatastorage.yaxislabeltext = yaxisfont.Text;
-
-            if (Customdatcheck.Checked == false)
+            
+            if(Customdatcheck.Checked == false)
             {
                 Form1.titrationdatastorage.iterationsetting = Convert.ToInt32(Sensitivty.Text);
             }
-            else if (Customdatcheck.Checked == true)
+            else if(Customdatcheck.Checked == true)
             {
                 try
                 {
@@ -391,7 +396,7 @@ namespace Titration_Analyzer
                     throw;
                 }
             }
-
+            
 
             //PDF settings
             Form1.titrationdatastorage.margins = Convert.ToInt32(margins.Text);
@@ -404,13 +409,13 @@ namespace Titration_Analyzer
 
         private void Customdatcheck_CheckedChanged(object sender, EventArgs e)
         {
-            if (Customdatcheck.Checked == true)
+            if(Customdatcheck.Checked == true)
             {
                 Sensitivty.Enabled = false;
                 Sensitivitymanual.Enabled = true;
                 Sensitivitymanual.BackColor = Color.White;
             }
-            else if (Customdatcheck.Checked == false)
+            else if(Customdatcheck.Checked == false)
             {
                 Sensitivty.Enabled = true;
                 Sensitivitymanual.Enabled = false;
@@ -438,7 +443,7 @@ namespace Titration_Analyzer
             {
                 automatic_select();
             }
-            else if (SolveMethod.Text == "Manual Range" && hplusstate.Text == "1")
+            else if(SolveMethod.Text == "Manual Range" && hplusstate.Text == "1")
             {
                 SolveMethod.Text = "Automatic";
                 MessageBox.Show("Manual Range can only be used for polyprotic substances");
@@ -456,7 +461,7 @@ namespace Titration_Analyzer
                     rangetwo.Enabled = true;
                     rangetwo.BackColor = Color.White;
                 }
-
+                
                 rangeone.BackColor = Color.White;
 
                 Sensitivitymanual.Enabled = false;
@@ -477,7 +482,7 @@ namespace Titration_Analyzer
                 MessageBox.Show("Manual Range can only be used for polyprotic substances");
                 automatic_select();
             }
-            else if (hplusstate.Text == "2" && SolveMethod.Text == "Manual Range")
+            else if(hplusstate.Text == "2" && SolveMethod.Text == "Manual Range")
             {
                 TargetRangeType.Enabled = true;
                 rangeone.Enabled = true;
@@ -492,7 +497,7 @@ namespace Titration_Analyzer
                 Sensitivitymanual.BackColor = Color.Beige;
 
             }
-            else if (hplusstate.Text == "3" && SolveMethod.Text == "Manual Range")
+            else if(hplusstate.Text == "3" && SolveMethod.Text == "Manual Range")
             {
                 TargetRangeType.Enabled = true;
                 rangeone.Enabled = true;
@@ -536,7 +541,7 @@ namespace Titration_Analyzer
                 }
 
             }
-            else if (Customdatcheck.Checked == false)
+            else if(Customdatcheck.Checked == false)
             {
                 Sensitivitymanual.BackColor = Color.Beige;
             }
@@ -544,7 +549,7 @@ namespace Titration_Analyzer
 
         private void Sensitivty_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (SolveMethod.Text == "Manual Range")
+            if(SolveMethod.Text == "Manual Range")
             {
                 Customdatcheck.Enabled = false;
                 Sensitivty.Enabled = false;
@@ -567,7 +572,7 @@ namespace Titration_Analyzer
                 {
                     var filename = findpythonexe.FileName;
 
-                    if (filename != "python.exe")
+                    if(filename != "python.exe")
                     {
                         MessageBox.Show("Python must be selected");
                     }
@@ -578,7 +583,7 @@ namespace Titration_Analyzer
                         Default.Enabled = true;
                         DirectoryPython.Text = fullfilepath;
                     }
-
+                   
                 }
                 else
                 {
@@ -589,23 +594,15 @@ namespace Titration_Analyzer
 
         private void Select_Custom_pKa(object sender, EventArgs e)
         {
-            if (CustompKa.Checked == true)
+            if(CustompKa.Checked == true)
             {
                 pKa1.Enabled = true;
-                pKa2.Enabled = true;
-                pKa3.Enabled = true;
                 pKa1.BackColor = Color.White;
-                pKa2.BackColor = Color.White;
-                pKa3.BackColor = Color.White;
             }
             else
             {
                 pKa1.Enabled = false;
-                pKa2.Enabled = false;
-                pKa3.Enabled = false;
                 pKa1.BackColor = Color.Beige;
-                pKa2.BackColor = Color.Beige;
-                pKa3.BackColor = Color.Beige;
             }
         }
 
@@ -622,13 +619,15 @@ namespace Titration_Analyzer
             Form1.titrationdatastorage.resolution = Convert.ToDouble(millneg1.Text) + Convert.ToDouble(millneg2.Text);
             Form1.titrationdatastorage.StrongAcidorBase = StrongAcid.Checked;
             Form1.titrationdatastorage.pythonpath = DirectoryPython.Text;
+            Form1.titrationdatastorage.custompKaselect = CustompKa.Checked;
+            Form1.titrationdatastorage.custompKa = CustompKa.Text;
 
             //Calc Settings
             Properties.Settings.Default.SolveMethod = SolveMethod.Text;
             Form1.titrationdatastorage.hplus = Convert.ToInt32(hplusstate.Text);
             Form1.titrationdatastorage.solvemethod = SolveMethod.Text;
             Form1.titrationdatastorage.rangetype = TargetRangeType.Text;
-
+            
 
             if (rangeone.Text == "")
             {
@@ -646,7 +645,7 @@ namespace Titration_Analyzer
                     rangeone.Text = "0";
                 }
             }
-            if (rangetwo.Text == "")
+            if(rangetwo.Text == "")
             {
 
             }
@@ -662,7 +661,7 @@ namespace Titration_Analyzer
                     rangetwo.Text = "0";
                 }
             }
-
+           
 
             //Chart settings
             Form1.titrationdatastorage.linethickness = Convert.ToInt32(LineThickness.Text);

@@ -10,24 +10,24 @@ def pk_to_k(pk):
 
 def closest_value(num, arr):
     """Returns the closest value to the number in the array."""
-    return min(arr, key = lambda x: abs(x - num))
+    return min(arr, key=lambda x: abs(x - num))
 
 
-class Compound :
-    def __init__(self, name, acidic, pKs, strong):
+class Compound:
+    def __init__(self, name, acidic, pKs):
         self.name = name
         self.acidic = acidic
         self.pKs = pKs
         self.K = pk_to_k(pKs)
-        self.strong = strong
+        self.strong = True if (len(pKs) == 0) and (pKs[0] <= 1) else False
 
 
-class AcidBase :
-    def __init__(self, 
-                 analyte, 
-                 titrant, 
-                 precision=0.01, 
-                 pKw=None, 
+class AcidBase:
+    def __init__(self,
+                 analyte,
+                 titrant,
+                 precision=0.01,
+                 pKw=None,
                  temp=None):
 
         self.analyte_is_acidic = analyte.acidic
@@ -41,20 +41,20 @@ class AcidBase :
         self.tname = titrant.name
 
         if pKw is not None:
-            self.kw = 10 **(-pKw)
+            self.kw = 10 ** (-pKw)
         elif temp is not None:
-            self.kw = 10 **(-self.get_kw(temp))
+            self.kw = 10 ** (-self.get_kw(temp))
         else:
-            self.kw = 10 **(-13.995)
+            self.kw = 10 ** (-13.995)
 
         self.strong_analyte = analyte.strong
         self.strong_titrant = titrant.strong
         self.precision = precision
         self.ph, self.hydronium, self.hydroxide = self.starting_phs()
 
-    def starting_phs(self, min_ph= 0, max_ph= 14):
-        ph = array(arange(min_ph, max_ph + self.precision, step = self.precision))
-        h = 10 **(-ph.copy())
+    def starting_phs(self, min_ph=0, max_ph=14):
+        ph = array(arange(min_ph, max_ph + self.precision, step=self.precision))
+        h = 10 ** (-ph.copy())
         oh = self.kw / h
         if self.analyte_is_acidic:
             return ph, h, oh
@@ -63,13 +63,13 @@ class AcidBase :
 
     @staticmethod
     def get_kw(temp, warn=False):
-        
+
         # Warn the user if the data is outside the analytical function range
         if (temp > 350 or temp < 0) and warn:
             print(
                 "Warning! The Kw calculation loses accuracy outside the range 0 C to 350 C"
-                "Proceed with caution, or try define a pKw during initialization."  
-              )
+                "Proceed with caution, or try define a pKw during initialization."
+            )
 
         # Variables for a quartic fit found to have an R^2 > 0.9999 for n=40 Kw values at different temps
         # This most likely works only on the range of data used: 0C to 350C
@@ -83,11 +83,11 @@ class AcidBase :
 
 
 class Bjerrum(AcidBase):
-    def __init__(self, 
-                 analyte, 
-                 titrant, 
-                 precision=0.01, 
-                 pKw=None, 
+    def __init__(self,
+                 analyte,
+                 titrant,
+                 precision=0.01,
+                 pKw=None,
                  temp=None):
 
         super().__init__(analyte, titrant, precision, pKw, temp)
@@ -110,8 +110,8 @@ class Bjerrum(AcidBase):
         k = array(k)
 
         # If the k values are for K_b, convert to K_a. --> K_1 = K_w / K_n , K_2 = K_w / K_(n-1)...
-        if not acid:
-            k = self.kw / flip(k)
+        # if not acid:
+        #    k = self.kw / flip(k)
 
         # The functionality of an acid or base can be determined by the number of dissociation constants it has.
         n = len(k)
@@ -141,15 +141,15 @@ class Titration(Bjerrum):
     """
 
     def __init__(
-        self,
-        analyte,
-        titrant,
-        volume_analyte,
-        concentration_analyte,
-        concentration_titrant,
-        precision=0.01,
-        pKw=None,
-        temp=None,
+            self,
+            analyte,
+            titrant,
+            volume_analyte,
+            concentration_analyte,
+            concentration_titrant,
+            precision=0.01,
+            pKw=None,
+            temp=None,
     ):
         super().__init__(analyte, titrant, precision, pKw, temp)
 
@@ -188,7 +188,7 @@ class Titration(Bjerrum):
         # Sum the scaled alpha values. Axis=1 forces the summation to occur for each individual [H+] value.
         # Since strong acids/bases fully dissociate, they only appear in their pure form, thus, their alpha values = 1
         # The alpha values are calculated to be almost exactly 1 anyways, but letting it calculate as normal breaks the
-        #  calculation. This would be a nice bug to work out later. 
+        #  calculation. This would be a nice bug to work out later.
         if self.strong_analyte:
             summed_scaled_alphas_analyte = array([1])
         else:

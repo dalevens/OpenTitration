@@ -56,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="acids.cs" />
     <Compile Include="adddata.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -67,6 +68,12 @@
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AcidSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AcidSelect.Designer.cs">
+      <DependentUpon>AcidSelect.cs</DependentUpon>
     </Compile>
     <Compile Include="molarcalc.cs" />
     <Compile Include="Program.cs" />
@@ -81,6 +88,9 @@
     <Compile Include="unkownacid.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AcidSelect.resx">
+      <DependentUpon>AcidSelect.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

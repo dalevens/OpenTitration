@@ -45,7 +45,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.PkaLabel = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.unkownacid = new System.Windows.Forms.TextBox();
             this.unkownacidlabel = new System.Windows.Forms.Label();
             this.Equivalence = new System.Windows.Forms.ComboBox();
             this.PKA = new System.Windows.Forms.ComboBox();
@@ -87,6 +86,9 @@
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
             this.Simulate = new System.Windows.Forms.Button();
             this.SimulatedSeries = new System.Windows.Forms.CheckBox();
+            this.unkownacid = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.knownanal = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.titrationdatBindingSource)).BeginInit();
@@ -241,18 +243,11 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Results";
             // 
-            // unkownacid
-            // 
-            this.unkownacid.Location = new System.Drawing.Point(520, 74);
-            this.unkownacid.Name = "unkownacid";
-            this.unkownacid.Size = new System.Drawing.Size(131, 26);
-            this.unkownacid.TabIndex = 41;
-            // 
             // unkownacidlabel
             // 
             this.unkownacidlabel.AutoSize = true;
             this.unkownacidlabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.unkownacidlabel.Location = new System.Drawing.Point(524, 33);
+            this.unkownacidlabel.Location = new System.Drawing.Point(528, 33);
             this.unkownacidlabel.Name = "unkownacidlabel";
             this.unkownacidlabel.Size = new System.Drawing.Size(138, 25);
             this.unkownacidlabel.TabIndex = 40;
@@ -360,6 +355,8 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label4);
+            this.groupBox2.Controls.Add(this.knownanal);
             this.groupBox2.Controls.Add(this.label19);
             this.groupBox2.Controls.Add(this.Base);
             this.groupBox2.Controls.Add(this.label9);
@@ -457,9 +454,9 @@
             this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label14.Location = new System.Drawing.Point(169, 269);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(60, 20);
+            this.label14.Size = new System.Drawing.Size(62, 20);
             this.label14.TabIndex = 28;
-            this.label14.Text = "known";
+            this.label14.Text = "Known";
             // 
             // mass
             // 
@@ -736,6 +733,34 @@
             this.SimulatedSeries.Text = "Simulated";
             this.SimulatedSeries.UseVisualStyleBackColor = true;
             // 
+            // unkownacid
+            // 
+            this.unkownacid.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.unkownacid.FormattingEnabled = true;
+            this.unkownacid.Location = new System.Drawing.Point(517, 71);
+            this.unkownacid.Name = "unkownacid";
+            this.unkownacid.Size = new System.Drawing.Size(145, 33);
+            this.unkownacid.TabIndex = 41;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(-4, 108);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(62, 20);
+            this.label4.TabIndex = 30;
+            this.label4.Text = "Known";
+            // 
+            // knownanal
+            // 
+            this.knownanal.AutoSize = true;
+            this.knownanal.Location = new System.Drawing.Point(16, 88);
+            this.knownanal.Name = "knownanal";
+            this.knownanal.Size = new System.Drawing.Size(22, 21);
+            this.knownanal.TabIndex = 29;
+            this.knownanal.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -839,7 +864,6 @@
         private System.Windows.Forms.ComboBox PKA;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.CheckBox Base;
-        private System.Windows.Forms.TextBox unkownacid;
         private System.Windows.Forms.Label unkownacidlabel;
         private System.Windows.Forms.LinkLabel linkLabel1;
         public System.Windows.Forms.DataVisualization.Charting.Chart chart1;
@@ -847,5 +871,9 @@
         public System.Windows.Forms.ComboBox hplusnum;
         private System.Windows.Forms.Button Simulate;
         private System.Windows.Forms.CheckBox SimulatedSeries;
+        private System.Windows.Forms.ComboBox unkownacid;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.CheckBox knownanal;
     }
 }
+

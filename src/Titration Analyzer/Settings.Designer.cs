@@ -70,13 +70,8 @@
             this.label6 = new System.Windows.Forms.Label();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.CustompKa = new System.Windows.Forms.CheckBox();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
-            this.pKa3 = new System.Windows.Forms.TextBox();
-            this.pKa2 = new System.Windows.Forms.TextBox();
             this.pKa1 = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
             this.StrongAcid = new System.Windows.Forms.CheckBox();
             this.millneg2 = new System.Windows.Forms.ComboBox();
             this.label11 = new System.Windows.Forms.Label();
@@ -85,6 +80,8 @@
             this.label10 = new System.Windows.Forms.Label();
             this.DirectoryPython = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
             this.Simulator.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage3.SuspendLayout();
@@ -612,14 +609,11 @@
             // 
             // tabPage4
             // 
-            this.tabPage4.Controls.Add(this.CustompKa);
-            this.tabPage4.Controls.Add(this.label15);
-            this.tabPage4.Controls.Add(this.label14);
-            this.tabPage4.Controls.Add(this.label13);
-            this.tabPage4.Controls.Add(this.pKa3);
-            this.tabPage4.Controls.Add(this.pKa2);
-            this.tabPage4.Controls.Add(this.pKa1);
             this.tabPage4.Controls.Add(this.label12);
+            this.tabPage4.Controls.Add(this.label14);
+            this.tabPage4.Controls.Add(this.CustompKa);
+            this.tabPage4.Controls.Add(this.label13);
+            this.tabPage4.Controls.Add(this.pKa1);
             this.tabPage4.Controls.Add(this.StrongAcid);
             this.tabPage4.Controls.Add(this.millneg2);
             this.tabPage4.Controls.Add(this.label11);
@@ -639,7 +633,7 @@
             // 
             this.CustompKa.AutoSize = true;
             this.CustompKa.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CustompKa.Location = new System.Drawing.Point(154, 206);
+            this.CustompKa.Location = new System.Drawing.Point(154, 204);
             this.CustompKa.Name = "CustompKa";
             this.CustompKa.Size = new System.Drawing.Size(112, 29);
             this.CustompKa.TabIndex = 41;
@@ -647,72 +641,24 @@
             this.CustompKa.UseVisualStyleBackColor = true;
             this.CustompKa.CheckedChanged += new System.EventHandler(this.Select_Custom_pKa);
             // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(238, 246);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(51, 25);
-            this.label15.TabIndex = 40;
-            this.label15.Text = "pK3";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(137, 246);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(51, 25);
-            this.label14.TabIndex = 39;
-            this.label14.Text = "pK2";
-            // 
             // label13
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(39, 246);
+            this.label13.Location = new System.Drawing.Point(8, 206);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(51, 25);
+            this.label13.Size = new System.Drawing.Size(120, 25);
             this.label13.TabIndex = 38;
-            this.label13.Text = "pK1";
-            // 
-            // pKa3
-            // 
-            this.pKa3.BackColor = System.Drawing.SystemColors.Info;
-            this.pKa3.Enabled = false;
-            this.pKa3.Location = new System.Drawing.Point(229, 280);
-            this.pKa3.Name = "pKa3";
-            this.pKa3.Size = new System.Drawing.Size(76, 26);
-            this.pKa3.TabIndex = 37;
-            // 
-            // pKa2
-            // 
-            this.pKa2.BackColor = System.Drawing.SystemColors.Info;
-            this.pKa2.Enabled = false;
-            this.pKa2.Location = new System.Drawing.Point(125, 280);
-            this.pKa2.Name = "pKa2";
-            this.pKa2.Size = new System.Drawing.Size(76, 26);
-            this.pKa2.TabIndex = 36;
+            this.label13.Text = "pKa values";
             // 
             // pKa1
             // 
             this.pKa1.BackColor = System.Drawing.SystemColors.Info;
             this.pKa1.Enabled = false;
-            this.pKa1.Location = new System.Drawing.Point(25, 280);
+            this.pKa1.Location = new System.Drawing.Point(53, 267);
             this.pKa1.Name = "pKa1";
-            this.pKa1.Size = new System.Drawing.Size(76, 26);
+            this.pKa1.Size = new System.Drawing.Size(205, 26);
             this.pKa1.TabIndex = 35;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(8, 208);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(126, 25);
-            this.label12.TabIndex = 34;
-            this.label12.Text = "PKa Values";
             // 
             // StrongAcid
             // 
@@ -824,6 +770,26 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.reset_settings);
             // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.Location = new System.Drawing.Point(51, 240);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(210, 20);
+            this.label14.TabIndex = 42;
+            this.label14.Text = "pKa1, pKa2, pKa2 - Ex. 1,2,3";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.Location = new System.Drawing.Point(9, 298);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(303, 20);
+            this.label12.TabIndex = 43;
+            this.label12.Text = "*Ascending for acid - descending for base";
+            // 
             // Settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -901,13 +867,10 @@
         private System.Windows.Forms.ComboBox millneg1;
         private System.Windows.Forms.CheckBox Default;
         private System.Windows.Forms.CheckBox CustompKa;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.TextBox pKa3;
-        private System.Windows.Forms.TextBox pKa2;
         private System.Windows.Forms.TextBox pKa1;
-        private System.Windows.Forms.Label label12;
         private System.Windows.Forms.CheckBox StrongAcid;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label14;
     }
 }

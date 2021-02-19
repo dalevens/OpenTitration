@@ -310,5 +310,29 @@ namespace Titration_Analyzer.Properties {
                 this["CustomPythonPath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool CustompKaselect {
+            get {
+                return ((bool)(this["CustompKaselect"]));
+            }
+            set {
+                this["CustompKaselect"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\"\"")]
+        public string CustompKa {
+            get {
+                return ((string)(this["CustompKa"]));
+            }
+            set {
+                this["CustompKa"] = value;
+            }
+        }
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Titration_Analyzer
+namespace Titration_Analyzer 
 {
     public class unkownacid
     {
@@ -86,7 +86,7 @@ namespace Titration_Analyzer
                 default:
                     break;
             }
-
+            
         }
 
         public double GetpKa(double pkb)
@@ -108,7 +108,7 @@ namespace Titration_Analyzer
             var splitunkownstring = acidPKa.Split(',').ToList();
             splitunkownstring.Remove("");
             splitunkownstring.Sort();
-
+            
             switch (acidtype)
             {
                 case 1:
@@ -117,21 +117,21 @@ namespace Titration_Analyzer
                     {
                         double acidvalue = 0;
 
-                        if (AcidorBase == true)
+                        if(AcidorBase == true)
                         {
                             acidvalue = GetpKa(Convert.ToDouble(acidentry.Value));
                         }
-                        else if (AcidorBase == false)
+                        else if(AcidorBase == false)
                         {
                             acidvalue = Convert.ToDouble(acidentry.Value);
                         }
-
+                        
                         if (Math.Abs(acidvalue - Convert.ToDouble(splitunkownstring[0])) < closestmatchdifference)
                         {
                             closestmatchdifference = Math.Abs(acidvalue - Convert.ToDouble(splitunkownstring[0]));
                             closestmatch = acidentry.Key;
                             acidorbasevalues = acidentry.Value;
-
+                            
                         }
                     }
                     percentmatch = Math.Round((1 - ((closestmatchdifference) / Convert.ToDouble(splitunkownstring[0]))) * 100);
@@ -146,21 +146,21 @@ namespace Titration_Analyzer
                         double firstacidpka = 0;
                         double secondacidpka = 0;
 
-                        if (AcidorBase == true)
+                        if(AcidorBase == true)
                         {
                             firstacidpka = GetpKa(Convert.ToDouble(acidentries[0]));
                             secondacidpka = GetpKa(Convert.ToDouble(acidentries[1]));
                         }
-                        else if (AcidorBase == false)
+                        else if(AcidorBase == false)
                         {
                             firstacidpka = Convert.ToDouble(acidentries[0]);
                             secondacidpka = Convert.ToDouble(acidentries[1]);
                         }
-
+                        
                         var firstunkownpka = Convert.ToDouble(splitunkownstring[0]);
                         var secondunkownpka = Convert.ToDouble(splitunkownstring[1]);
 
-                        if (Math.Abs(firstacidpka - firstunkownpka) + Math.Abs(secondacidpka - secondunkownpka) < closestmatchdifference)
+                        if (Math.Abs(firstacidpka - firstunkownpka) + Math.Abs(secondacidpka - secondunkownpka)< closestmatchdifference)
                         {
                             closestmatchdifference = Math.Abs(firstacidpka - firstunkownpka) + Math.Abs(secondacidpka - secondunkownpka);
                             closestmatch = acidentry.Key;
@@ -171,9 +171,9 @@ namespace Titration_Analyzer
                             secondequiv = secondunkownpka;
                         }
                     }
-                    percentmatch = Math.Round((((1 - (firstdifference / firstequiv)) + (1 - (seconddifference / secondequiv))) / 2) * 100);
+                    percentmatch = Math.Round((((1-(firstdifference/firstequiv)) + (1 - (seconddifference / secondequiv)))/2)*100);
                     break;
-
+                    
 
                 case 3:
                     foreach (KeyValuePair<string, string> acidentry in triproticacidone)
@@ -183,21 +183,21 @@ namespace Titration_Analyzer
 
                         double firstacidpka = 0;
                         double secondacidpka = 0;
-
-                        if (AcidorBase == true)
+                        
+                        if(AcidorBase == true)
                         {
                             firstacidpka = GetpKa(Convert.ToDouble(acidentries[0]));
                             secondacidpka = GetpKa(Convert.ToDouble(acidentries[1]));
                         }
-                        else if (AcidorBase == false)
+                        else if(AcidorBase == false)
                         {
                             firstacidpka = Convert.ToDouble(acidentries[0]);
                             secondacidpka = Convert.ToDouble(acidentries[1]);
                         }
-
-
+                        
+                        
                         var thirdacidpka = new List<string>();
-
+                        
                         if (acidentries[2].Contains('/'))
                         {
                             thirdacidpka = acidentries[2].Split('/').ToList();
@@ -206,7 +206,7 @@ namespace Titration_Analyzer
                         {
                             thirdacidpka.Add(acidentries[2]);
                         }
-
+                       
                         var firstunkownpka = Convert.ToDouble(splitunkownstring[0]);
                         var secondunkownpka = Convert.ToDouble(splitunkownstring[1]);
                         var thirdunkownpka = Convert.ToDouble(splitunkownstring[2]);
@@ -215,11 +215,11 @@ namespace Titration_Analyzer
                         {
                             double acidorbaseentry = 0;
 
-                            if (AcidorBase == true)
+                            if(AcidorBase == true)
                             {
                                 acidorbaseentry = GetpKa(Convert.ToDouble(acid));
                             }
-                            else if (AcidorBase == false)
+                            else if(AcidorBase == false)
                             {
                                 acidorbaseentry = Convert.ToDouble(acid);
                             }
@@ -237,13 +237,13 @@ namespace Titration_Analyzer
                                 thirdequiv = thirdunkownpka;
                             }
                         }
+                        
 
-
-
+                        
                     }
                     percentmatch = Math.Round((((1 - (firstdifference / firstequiv)) + (1 - (seconddifference / secondequiv)) + (1 - (thirddifference / thirdequiv))) / 3) * 100);
                     break;
-
+                    
                 default:
                     break;
             }
