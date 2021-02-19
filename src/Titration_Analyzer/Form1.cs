@@ -935,9 +935,6 @@ namespace Titration_Analyzer
 
             double simulationvolume = titrationdatastorage.maxvolume;
 
-            //Here is a setting that allows you to set what data points are calculated for the simulator
-            //Are you okay with adding this, or is this too much work?
-
             double resolution = titrationdatastorage.resolution;
 
 
