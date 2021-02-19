@@ -962,7 +962,7 @@ namespace Titration_Analyzer
             // TODO var script should be the directory for script.py
             // Needs the full directory, not just the filename
             var script = Application.StartupPath + @"\script.py";
-            start.Arguments = string.Format("{0} {1} {2} {3} {4} {5} {6} {7} {8}", script, a_acidic, t_acidic, a_pK, t_pK, a_vol, a_conc, t_conc, 0.1);
+            start.Arguments = string.Format("{0} {1} {2} {3} {4} {5} {6} {7} {8}", script, a_acidic, t_acidic, a_pK, t_pK, a_vol, a_conc, t_conc, resolution);
 
             // 3) Process configuration
             start.UseShellExecute = false;
