@@ -19,3 +19,7 @@ Update January 23, 2020:
   3. Fixed bug that only allowed for two pages in the PDF. 
   4. Updated user manual to reflect changed in the manual range method. 
   5. Updated database of unkown acids.
+
+February 19, 2020:
+
+New features under construction. New collaborator Jackson Elowitt. Working to combine his titration simulator with open titration, features near completion.
