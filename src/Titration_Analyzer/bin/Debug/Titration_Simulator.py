@@ -1,5 +1,3 @@
-import time
-import sys
 from numpy import array, arange, divide, where, flip, abs
 from numpy.core.fromnumeric import prod, sum, transpose
 
@@ -19,8 +17,9 @@ class Compound:
         self.acidic = acidic
         self.pKs = pKs
         self.K = pk_to_k(pKs)
-        self.strong = True if (len(pKs) == 0) and (pKs[0] <= 1) else False
-
+        # Acids are strong if the pKa is less than 1. Bases are strong if the pKa is greater than 13.
+        self.strong = True if ((len(pKs) == 1) and ((acidic and (pKs[0] <= 1)) or (not acidic and (pKs[0] >= 13)))) else False
+        
 
 class AcidBase:
     def __init__(self,
@@ -165,7 +164,7 @@ class Titration(Bjerrum):
         # Calculate the respective titrant values for each pH
         self.volume_titrant, self.phi = self.calculate_volume(self.titrant_acidity)
 
-        # Trimmed values for gui plot
+        # Trimmed values for plot
         self.ph_t, self.volume_titrant_t = self.trim_values(self.ph, self.volume_titrant)
 
     def trim_values(self, *args):
