@@ -18,8 +18,9 @@ class Compound:
         self.pKs = pKs
         self.K = pk_to_k(pKs)
         # Acids are strong if the pKa is less than 1. Bases are strong if the pKa is greater than 13.
-        self.strong = True if ((len(pKs) == 1) and ((acidic and (pKs[0] <= 1)) or (not acidic and (pKs[0] >= 13)))) else False
-        
+        self.strong = True if (
+                (len(pKs) == 1) and ((acidic and (pKs[0] <= 1)) or (not acidic and (pKs[0] >= 13)))) else False
+
 
 class AcidBase:
     def __init__(self,
@@ -107,10 +108,6 @@ class Bjerrum(AcidBase):
     def alpha_values(self, k, acid=True):
         # Convert the k values to a list to help with matrix transformations.
         k = array(k)
-
-        # If the k values are for K_b, convert to K_a. --> K_1 = K_w / K_n , K_2 = K_w / K_(n-1)...
-        # if not acid:
-        #    k = self.kw / flip(k)
 
         # The functionality of an acid or base can be determined by the number of dissociation constants it has.
         n = len(k)
