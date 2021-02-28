@@ -4,14 +4,14 @@ import sys
 a_acidic = bool(sys.argv[1])
 t_acidic = not a_acidic
 
-a_pK = list(map(float, sys.argv[3].split(",")))
-t_pK = list(map(float, sys.argv[4].split(",")))
+a_pK = list(map(float, sys.argv[2].split(",")))
+t_pK = list(map(float, sys.argv[3].split(",")))
 
-a_vol = float(sys.argv[5])
-a_conc = float(sys.argv[6])
-t_conc = float(sys.argv[7])
+a_vol = float(sys.argv[4])
+a_conc = float(sys.argv[5])
+t_conc = float(sys.argv[6])
 
-resolution = float(sys.argv[8])
+resolution = float(sys.argv[7])
 
 
 analyte = Compound(name="analyte", acidic=a_acidic, pKs=a_pK)
