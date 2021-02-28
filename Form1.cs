@@ -1082,10 +1082,6 @@ namespace Titration_Analyzer
             }
             //string t_pK = titrationdatastorage.acidchosenpka;
 
-            // These are not needed
-            // bool a_strong = false; //how would you like to determine whether the analyte is strong or not? Right now there is no option for it.
-            // bool t_strong = titrationdatastorage.StrongAcidorBase;
-
             //The data needed will only be loaded once the titration data of the origonal sample
             //Has been successfully analyzed.
 
@@ -1093,22 +1089,16 @@ namespace Titration_Analyzer
             double a_conc = titrationdatastorage.a_conc_Global;
             double t_conc = titrationdatastorage.t_conc_Global;
 
-            //Here is the volume that the simulated data should be generated to. From 0 to the max
-            //Of the origonal titration data.
+            // Here is the volume that the simulated data should be generated to. From 0 to the max
+            // Of the origonal titration data.
 
             double simulationvolume = titrationdatastorage.maxvolume;
 
-            //Here is a setting that allows you to set what data points are calculated for the simulator
-            //Are you okay with adding this, or is this too much work?
-
+            // Resolution of the simulated curve (0.1 means every 0.1 pH value is calculated)
             double resolution = titrationdatastorage.resolution;
 
 
             // Create Process Info
-            // TODO The filename needs to be the directory of python.exe
-            // Can be found in python_env\Scripts\python.exe
-            // Needs the full directory, not just the filename
-
             ProcessStartInfo start = new ProcessStartInfo(Application.StartupPath + @"\python_env\Scripts\python.exe");
 
             //Because this is going into an install filepath with the stand alone installer
@@ -1118,19 +1108,17 @@ namespace Titration_Analyzer
             start.FileName = titrationdatastorage.pythonpath;
 
 
-            // 2) Provide script and arguments
-            // TODO var script should be the directory for script.py
-            // Needs the full directory, not just the filename
+            // Provide script and arguments
             var script = Application.StartupPath + @"\script.py";
             start.Arguments = string.Format("{0} {1} {2} {3} {4} {5} {6} {7}", script, a_acidic, a_pK, t_pK, a_vol, a_conc, t_conc, resolution);
 
-            // 3) Process configuration
+            // Process configuration
             start.UseShellExecute = false;
             start.RedirectStandardInput = true;
             start.RedirectStandardOutput = true;
             start.RedirectStandardError = true;
 
-            // 4) Execute process and get output
+            // Execute process and get output
             using (Process process = Process.Start(start))
             {
                 // Get the data from the printed output of the script.py
@@ -1146,7 +1134,7 @@ namespace Titration_Analyzer
                 // MessageBox.Show($"aconc: {a_conc}");
                 // MessageBox.Show($"tconc: {t_conc}");
                 // MessageBox.Show($"reso: {resolution}");
-                MessageBox.Show(results);
+                // MessageBox.Show(results);
                 // MessageBox.Show(errors);
 
                 // Split the printed statements by the newline separating them. Also remove all square brackets and spaces
