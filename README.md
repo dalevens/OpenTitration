@@ -13,13 +13,21 @@ Update Dec 22, 2020: Corrected error regarding incorrectly computed concentratio
 
 New collaborator (Tim Bernhard) -> Working to simplify code for easier work flow and management.
 
-Update January 23, 2020: 
+Update January 23, 2021: 
   1. Created a new manual range method for titration data analysis. 
   2. Fixed bugs in the UI. 
   3. Fixed bug that only allowed for two pages in the PDF. 
   4. Updated user manual to reflect changed in the manual range method. 
   5. Updated database of unkown acids.
 
-February 19, 2020:
+February 19, 2021:
 
 New features under construction. New collaborator Jackson Elowitt. Working to combine his titration simulator with open titration, features near completion.
+
+April 12, 2021:
+
+All variables needed for simulation now pass to the simulator. 
+Tutorial video completed.
+New installer package utillized.
+Updated and more interactive interface.
+
