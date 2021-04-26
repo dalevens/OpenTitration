@@ -1,0 +1,13 @@
+ANALYTE
+name=Analyte
+acidic=True
+pkas=3,6,9
+TITRANT
+name=Titrant
+pkas=15
+TITRATION
+concentration_analyte=0.1
+concentration_titrant=0.1
+volume_analyte=25
+temp=
+decimal_places=
