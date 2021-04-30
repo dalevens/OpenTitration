@@ -1,2 +1,0 @@
-C:\Users\danie\source\repos\Titration Analyzer\OpenTitrationInstaller\bin\Release\OpenTitrationInstaller.msi
-C:\Users\danie\source\repos\Titration Analyzer\OpenTitrationInstaller\bin\Release\OpenTitrationInstaller.wixpdb

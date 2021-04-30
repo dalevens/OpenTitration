@@ -1,0 +1,13 @@
+ANALYTE
+name=NaOH
+acidic=True
+pkas=4.72
+TITRANT
+name=Hydrazoic (3.2% Error)
+pkas=15.7
+TITRATION
+concentration_analyte=0.5819
+concentration_titrant=1
+volume_analyte=25
+temp=20
+decimal_places=0.1

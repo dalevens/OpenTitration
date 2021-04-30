@@ -1,6 +1,0 @@
-C:\Users\danie\source\repos\Titration Analyzer\OpenTitrationInstaller\bin\Release\OpenTitrationInstaller.msi
-C:\Users\danie\source\repos\Titration Analyzer\OpenTitrationInstaller\bin\Release\OpenTitrationInstaller.wixpdb
-obj\Release\Product.wixobj
-obj\Release\OpenTitrationInstaller.wixproj.BindContentsFileListnull.txt
-obj\Release\OpenTitrationInstaller.wixproj.BindOutputsFileListnull.txt
-obj\Release\OpenTitrationInstaller.wixproj.BindBuiltOutputsFileListnull.txt
