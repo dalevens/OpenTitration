@@ -234,7 +234,7 @@ namespace Titration_Analyzer
             }
             catch (Exception)
             {
-                MessageBox.Show("The data is not in the correct format. For a guide to how to format your data, please reveiw the usermanual.", "Error: Failure to Import Data", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("The data is not in the correct format. For a guide to how to format your data, please reveiw the user manual.", "Error: Failure to Import Data", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
