@@ -31,3 +31,6 @@ Tutorial video completed.
 New installer package utillized.
 Updated and more interactive interface.
 
+April 30, 2021:
+
+Changed the method for running the simulator. Added functionality to adjust the temperature. Fixed errors associated with these changes.
