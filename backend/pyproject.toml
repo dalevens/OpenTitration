@@ -1,0 +1,21 @@
+[project]
+name = "opentitration-backend"
+version = "1.0.0"
+description = "OpenTitration - Open source titration data analysis (backend API)"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.34.0",
+    "python-multipart>=0.0.18",
+    "numpy>=2.0.0",
+    "pydantic>=2.0.0",
+    "pydantic-settings>=2.0.0",
+    "reportlab>=4.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "httpx>=0.28.0",
+    "pytest-asyncio>=0.24.0",
+]
